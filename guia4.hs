@@ -111,7 +111,15 @@ sucesionA2 n | n <= 1 = 2.0
              | otherwise = 2.0 + (1.0 / sucesionA2 (n-1))
 
 
-            
+--13)Implementar doble sumatoria simple
+
+fdoble :: Integer -> Integer -> Integer
+fdoble n m |n==0=0
+           |otherwise = fdoble (n-1) m + fdobleAux n m 
+
+fdobleAux :: Integer -> Integer -> Integer
+fdobleAux n m |m==0=0
+              |otherwise = n^m + fdobleAux n (m-1)          
 
 
 
