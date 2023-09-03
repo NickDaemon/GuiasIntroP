@@ -77,6 +77,43 @@ f2 n m |n==1=m
        |otherwise = m^n + f2 (n-1) m
 
 --c)
+f3 :: Integer -> Integer -> Integer
+f3 n q = f2 (2*n) q
+
+--d)
+f4 :: Integer -> Float -> Float
+f4 n q = f4Aux (2*n) n q
+
+f4Aux :: Integer -> Integer -> Float -> Float
+f4Aux n i q | i == n = q^n
+            | otherwise = q^n + f4Aux (n-1) i q
+
+
+--11)a)Implementar una funci´on eAprox que aproxima el valor de e.
+
+fact :: Float -> Float
+fact n |n == 0 = 1
+       |n == 1 = 1
+       |otherwise = n*fact (n-1)
+
+
+eAprox :: Float -> Float
+eAprox n |n==0=1
+         |otherwise= (1 / fact n) + eAprox (n-1)
+
+--12)Raiz de 2 aprox
+
+raizDe2Aprox :: Integer -> Float
+raizDe2Aprox n = (sucesionA2 n) - 1.0
+
+sucesionA2 :: Integer -> Float
+sucesionA2 n | n <= 1 = 2.0
+             | otherwise = 2.0 + (1.0 / sucesionA2 (n-1))
+
+
+            
+
+
 
 
 
