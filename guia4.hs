@@ -119,7 +119,44 @@ fdoble n m |n==0=0
 
 fdobleAux :: Integer -> Integer -> Integer
 fdobleAux n m |m==0=0
-              |otherwise = n^m + fdobleAux n (m-1)          
+              |otherwise = n^m + fdobleAux n (m-1)  
+
+--14)Implementar sumapotencias doble
+
+sumaPot :: Integer -> Integer -> Integer -> Integer
+sumaPot n m p |n==0=0
+              |otherwise = sumaPot (n-1) m p + sumaPotAux n m p
+
+sumaPotAux :: Integer -> Integer -> Integer -> Integer
+sumaPotAux n m p |m==0=0
+                 |otherwise = p^(n + m) + sumaPotAux n (m-1) p 
+
+--15)Especificar e implementar una funci´on sumaRacionales
+
+sumaRac:: Integer ->Integer ->Float
+sumaRac n m |n==0=0
+            |otherwise = sumaRac (n-1) m + sumaRacAux n m
+
+sumaRacAux :: Integer -> Integer -> Float
+sumaRacAux n m |m==0=0
+               |otherwise = fromIntegral n / fromIntegral m + sumaRacAux n (m-1)  
+
+--16)a)Implementar menorDivisor que calcula el menor divisor > 1 de un n 
+
+
+
+menorDivisor :: Integer -> Integer
+menorDivisor n |mod n 2 == 0 = 2
+               |otherwise = menorDivisorAux n n
+
+menorDivisorAux :: Integer -> Integer -> Integer
+menorDivisorAux n m  |n==1=1
+                     |mod n (nEsimoImpar n m) == 0 = nEsimoImpar n m
+                     |otherwise = menorDivisorAux n (m-1)
+
+nEsimoImpar :: Integer -> Integer -> Integer
+nEsimoImpar n m = ((2*(n - (m-1))) + 1)           
+                   
 
 
 
