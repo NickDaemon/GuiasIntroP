@@ -155,6 +155,22 @@ menorDivisorAux n m  |mod n (auxD n m) == 0 = auxD n m
 auxD :: Integer -> Integer -> Integer
 auxD n m = ((2*(n - (m-1))) + 1)           
                    
+--b)Implementar la funcion esPrimo , que me dice si un n es primo
+esPrimo :: Integer -> Bool
+esPrimo n |n==1=False
+          |menorDivisor n == n = True
+          |otherwise = False
+
+--c)Implementar la funcion sonCoprimos
+sonCoprimos :: Integer -> Integer -> Bool
+sonCoprimos n m |mod n m == 0 || mod m n == 0 = False
+                |mod n (mod n m) == 0 && mod n (mod m n) == 0 = False
+                |otherwise = True
+
+--d)Implementar la funci´on nEsimoPrimo que me devuelve el n esimo primo
+
+
+                          
 
 
 
