@@ -143,19 +143,17 @@ sumaRacAux n m |m==0=0
 
 --16)a)Implementar menorDivisor que calcula el menor divisor > 1 de un n 
 
-
-
 menorDivisor :: Integer -> Integer
-menorDivisor n |mod n 2 == 0 = 2
+menorDivisor n |n==1=1
+               |mod n 2 == 0 = 2
                |otherwise = menorDivisorAux n n
 
 menorDivisorAux :: Integer -> Integer -> Integer
-menorDivisorAux n m  |n==1=1
-                     |mod n (nEsimoImpar n m) == 0 = nEsimoImpar n m
+menorDivisorAux n m  |mod n (auxD n m) == 0 = auxD n m
                      |otherwise = menorDivisorAux n (m-1)
 
-nEsimoImpar :: Integer -> Integer -> Integer
-nEsimoImpar n m = ((2*(n - (m-1))) + 1)           
+auxD :: Integer -> Integer -> Integer
+auxD n m = ((2*(n - (m-1))) + 1)           
                    
 
 
