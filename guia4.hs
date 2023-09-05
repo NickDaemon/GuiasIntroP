@@ -1,8 +1,8 @@
 -- 1)Implementar la sucesion de fibbonacci.
-fib :: Integer -> Integer 
-fib n |n == 0 = 0
-      |n == 1 = 1
-      |otherwise = fib (n-1) + fib (n-2)
+fib :: Integer -> Integer
+fib 0 = 0
+fib 1 = 1
+fib n = fib (n-1) + fib (n-2)
 
 --2)Implementar la funcion Parte entera que de un float solo se queda la parte entera.
 
@@ -59,7 +59,7 @@ cantD n |div n 10 == 0 = 1
         |otherwise = 1 + cantD (div n 10)
 
 iesimoD :: Integer -> Integer -> Integer
-iesimoD n m = mod (div n (10^((cantD n)-m))) 10      
+iesimoD n m = mod (div n (10^((cantD n)-m))) 10    
 
 --9)Implementar la funcion esCapicua que determina si un numero n es capicua.
 
@@ -169,10 +169,17 @@ sonCoprimos n m |mod n m == 0 || mod m n == 0 = False
 
 --d)Implementar la funci´on nEsimoPrimo que me devuelve el n esimo primo
 
+--17)
+esFib :: Integer -> Bool
+esFib n |n==0=False
+        |otherwise = esFibAux n n
 
-                          
+esFibAux :: Integer -> Integer -> Bool
+esFibAux n m |m==0=False
+             |fib (m+1) == n = True
+             |otherwise = esFibAux n (m-1) 
 
-
+--18)Implementar una funci´on mayorDigitoPar que me devuelve el digito par mas grande de n ,sino tiene devuelve -1
 
 
 
