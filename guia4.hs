@@ -167,9 +167,18 @@ sonCoprimos n m |mod n m == 0 || mod m n == 0 = False
                 |mod n (mod n m) == 0 && mod n (mod m n) == 0 = False
                 |otherwise = True
 
---d)Implementar la funci´on nEsimoPrimo que me devuelve el n esimo primo
+                 
 
---17)
+--d)Implementar la funci´on nEsimoPrimo que me devuelve el n esimo primo
+nEsimoPrimo :: Integer -> Integer
+nEsimoPrimo n |n==1=2
+              |otherwise = siguientePrimo (nEsimoPrimo (n-1))
+
+siguientePrimo :: Integer -> Integer
+siguientePrimo n |esPrimo (n+1) = n + 1
+                 |otherwise = siguientePrimo (n+1)              
+
+ --17)
 esFib :: Integer -> Bool
 esFib n |n==0=False
         |otherwise = esFibAux n n
@@ -177,9 +186,23 @@ esFib n |n==0=False
 esFibAux :: Integer -> Integer -> Bool
 esFibAux n m |m==0=False
              |fib (m+1) == n = True
-             |otherwise = esFibAux n (m-1) 
+             |otherwise = esFibAux n (m-1)
 
 --18)Implementar una funci´on mayorDigitoPar que me devuelve el digito par mas grande de n ,sino tiene devuelve -1
+                       
 
 
+--19)Implementar la funici´on esSumaInicialDePrimos 
+esSumaP :: Integer -> Bool
+esSumaP n  = sumaAux n n
+           
+sumaAux :: Integer -> Integer -> Bool
+sumaAux n m |m==1=False
+            |n==sumaPrimos m = True
+            |otherwise = sumaAux n (m-1)
 
+sumaPrimos :: Integer -> Integer
+sumaPrimos n |n==0=0
+             |otherwise = (nEsimoPrimo n) + sumaPrimos (n-1) 
+             
+              
