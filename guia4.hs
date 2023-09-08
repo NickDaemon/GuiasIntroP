@@ -204,5 +204,34 @@ sumaAux n m |m==1=False
 sumaPrimos :: Integer -> Integer
 sumaPrimos n |n==0=0
              |otherwise = (nEsimoPrimo n) + sumaPrimos (n-1) 
+
+--20)Especificar e implementar la funci´on tomaValorMax     
+
+sumaDivisores :: Integer -> Integer
+sumaDivisores n = sumaDivAux n n
+
+sumaDivAux :: Integer -> Integer -> Integer
+sumaDivAux n m |m == 0 = 0
+               |mod n m == 0 = m + sumaDivAux n (m-1)
+               |mod n m /= 0 = sumaDivAux n (m-1)
+
+tomaValorMax :: Integer -> Integer -> Integer
+tomaValorMax n m |n==m=m
+                 |m==0=n
+                 |sumaDivisores n > sumaDivisores m = tomaValorMax n (m-1) 
+                 |sumaDivisores n < sumaDivisores m = tomaValorMax (n+1) m   
+                 |sumaDivisores n == sumaDivisores m = tomaValorMax n (m-1)  
+
+--21)Implementar funcion Pitagoras
+pitagoras :: Integer ->Integer ->Integer ->Integer 
+pitagoras n m q |n < 0 = 0
+                |otherwise = pitagorasAux n m q + pitagoras (n-1) m q   
+
+pitagorasAux :: Integer -> Integer -> Integer -> Integer 
+pitagorasAux n m q |m < 0 = 0
+                   |n^2 + m^2 <= q^2 = 1 + pitagorasAux n (m-1) q
+                   |otherwise = pitagorasAux n (m-1) q
+                               
+        
              
               
