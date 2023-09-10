@@ -1,15 +1,4 @@
---Funciones basicas para practicar listas
-longitud :: [Int] -> Int
-longitud [] = 0
-longitud (x:xs) = 1 + longitud xs
-
-sumatoria :: [Int] -> Int
-sumatoria [] = 0
-sumatoria (x:xs) = x + sumatoria xs
-
-
-
---EJERCICIO 1
+--EJERCICIO 1 (PRIMEROS CONCEPTOS DE RECURSION)
 --1)Problema Ultimo devuelve el ultimo elemento de una lista
 
 ultimo :: [t] -> t
@@ -26,7 +15,7 @@ reverso :: [t] -> [t]
 reverso [] = []
 reverso (x:xs) = ultimo (x:xs) : reverso (principio (x:xs))
 
---EJERCICIO 2
+--EJERCICIO 2 (LISTAS GENERAL)
 --1)Implementar pertenece que indica si un elemento pertenece a la lista
 pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece n [] = False
@@ -93,7 +82,80 @@ mismosElementos :: (Eq t) => [t] -> [t] -> Bool
 mismosElementos (x:xs) (y:ys) |gotchu (x:xs) (y:ys) && gotchu (y:ys) (x:xs) = True
                               |otherwise = False                                           
 
+--9)esCapicua
+
+capicua ::(Eq t) => [t] -> Bool
+capicua [x] = True
+capicua [] = True
+capicua (x:xs) |x  == ultimo (x:xs) = capicua (principio xs)  
+               |otherwise = False  
+
+--EJERCICIO 3 (LISTAS DE ENTEROS) 
+--1)Sumatoria
+sumatoria :: [Integer] -> Integer
+sumatoria [] = 0
+sumatoria (x:xs) = x + sumatoria xs
+
+--2)Productoria
+
+productoria :: [Integer] -> Integer 
+productoria [x] = x
+productoria (x:xs) = x * productoria xs
+
+--3)Maximo
+maximus :: [Integer] -> Integer 
+maximus [x] = x 
+maximus (x:xs) |x >= ultimo (x:xs) = maximus (principio (x:xs))
+               |otherwise = maximus xs
+
+--4)Sumar N 
+
+sumarN :: Integer -> [Integer] -> [Integer]
+sumarN n [x] = [x + n]
+sumarN n (x:xs) = x + n : sumarN n xs
+
+--5)sumar el primero
+
+sumarElPrimero :: [Integer] -> [Integer]
+sumarElPrimero [] = []
+sumarElPrimero (x:xs) = sumarAux (x:xs) (x:xs)
+
+sumarAux :: [Integer] -> [Integer] -> [Integer]
+sumarAux (x:xs) [] = []
+sumarAux (x:xs) (y:ys) = x + y : sumarAux (x:xs) ys
+
+--6)sumar el ultimo
+
+sumarElUltimo:: [Integer] -> [Integer]
+sumarElUltimo [] = []
+sumarElUltimo (x:xs) = sumarAux2 (x:xs) (x:xs)
+
+sumarAux2 :: [Integer] -> [Integer] -> [Integer]
+sumarAux2 (x:xs) [] = []
+sumarAux2 (x:xs) (y:ys) = ultimo (x:xs) + y : sumarAux2 (x:xs) ys
+
+--7)Pares , solo devuelve la lista con elementos pares contando repes.
+pares :: [Integer] -> [Integer]
+pares [] = []
+pares (x:xs) |mod x 2 == 0 = x : pares xs
+             |otherwise = pares xs
+
+--8)idem que pares pero con multiplos de un n
+multiplosDeN :: Integer -> [Integer] -> [Integer]
+multiplosDeN n [] = []
+multiplosDeN n (x:xs) |mod x n == 0 = x : multiplosDeN n xs
+                      |otherwise = multiplosDeN n xs    
+
+--9)ordenar en forma creciente la lista.
+ordenar :: [Integer] -> [Integer]
                               
+
+
+
+
+
+
+                       
                                                  
 
 
