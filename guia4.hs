@@ -253,6 +253,4 @@ pitagorasAux n m q |m < 0 = 0
                    |n^2 + m^2 <= q^2 = 1 + pitagorasAux n (m-1) q
                    |otherwise = pitagorasAux n (m-1) q
                                
-        
-             
-              
+                                            
