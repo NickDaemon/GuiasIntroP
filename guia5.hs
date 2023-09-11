@@ -148,7 +148,22 @@ multiplosDeN n (x:xs) |mod x n == 0 = x : multiplosDeN n xs
 
 --9)ordenar en forma creciente la lista.
 ordenar :: [Integer] -> [Integer]
-                              
+ordenar [] = []
+ordenar (x:xs) = mini (x:xs) : ordenar (sortearRepe (x:xs))
+
+--Aca ayuda a la recursion a ordenar los que sean iguales
+sortearRepe :: [Integer] -> [Integer]
+sortearRepe (x:xs) = quitar (mini (x:xs)) (x:xs)
+
+--Aca defino el primer elemento de la lista
+mini :: [Integer] -> Integer 
+mini [x] = x 
+mini (x:xs) |x <= ultimo (x:xs) = mini (principio (x:xs))
+            |otherwise = mini xs
+
+
+
+--EJERCICIO 4                             
 
 
 
