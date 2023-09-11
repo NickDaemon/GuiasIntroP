@@ -163,7 +163,41 @@ mini (x:xs) |x <= ultimo (x:xs) = mini (principio (x:xs))
 
 
 
---EJERCICIO 4                             
+--EJERCICIO 4 (LISTAS DE CHAR)
+--1)sacarBlancosRepetidos deja solo un espacio blanco entre palabras
+
+--Arreglo que no inicie ni termine con blancos
+sacarBlancosRepetidos :: [Char] -> [Char]
+sacarBlancosRepetidos (x:xs) |head (sacarAux (x:xs)) == ' ' && ultimo (sacarAux (x:xs)) == ' ' = quitar x (principio (sacarAux (x:xs)))
+                             |head (sacarAux (x:xs)) == ' ' && ultimo (sacarAux (x:xs)) /= ' ' = sacarAux xs
+                             |head (sacarAux (x:xs)) /= ' ' && ultimo (sacarAux (x:xs)) == ' ' = principio (sacarAux (x:xs))
+                             |otherwise = sacarAux (x:xs)
+                             
+--Aca devuelvo la lista con maximo 1 blanco , ya sea iniciando o terminando 
+sacarAux :: [Char] -> [Char]
+sacarAux [x] = [x]
+sacarAux (x:xs) |x == ' ' && head xs == ' ' = sacarAux xs
+                |x /= ' ' = x : sacarAux xs
+                |otherwise = x : sacarAux xs
+
+--2)contar Palabras
+contarPalabras :: [Char] -> Integer
+contarPalabras (x:xs) |x == ' ' = contarAux (x:xs)
+                      |otherwise = contarAux1 (x:xs)
+--Cuenta las palabras sino inicia con blanco
+contarAux1 :: [Char] -> Integer
+contarAux1 [] = 1
+contarAux1 (x:xs)|x == ' ' = 1 + contarAux1 (sacarBlancosRepetidos xs)
+                 |otherwise = contarAux1 xs
+
+--Cuenta las palabras si inicia con un blanco
+contarAux :: [Char] -> Integer
+contarAux [] = 1
+contarAux (x:xs) = contarAux1 (x:xs) - 1
+
+
+                            
+
 
 
 
