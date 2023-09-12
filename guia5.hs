@@ -212,12 +212,19 @@ listaP (x:xs) |x /= ' ' = x : listaP xs
 sacarLista :: [Char] -> [Char]
 sacarLista [] = []
 sacarLista (x:xs) |x == ' ' = xs
-                  |otherwise = sacarLista xs
+                   |otherwise = sacarLista xs
 
 
 --4)Devuelve la palabra mas larga de una lista
- 
 
+palabraLarga :: [Char] -> [Char]
+palabraLarga (x:xs) = maxL (palabras (x:xs)) (palabras (x:xs))
+
+maxL :: [[Char]] -> [[Char]] -> [Char]
+maxL [x] (y:ys) = y
+maxL (x:xs) [y] = x
+maxL (x:xs) (y:ys) |x >= head ys = maxL (x:xs) ys
+                   |otherwise = maxL xs (y:ys)                 
 
 
 
