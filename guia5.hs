@@ -1,4 +1,4 @@
---EJERCICIO 1 (PRIMEROS CONCEPTOS DE RECURSION)
+--EJERCICIO 1 (PRIMEROS CONCEPTOS DE RECURSION EN LISTAS)
 --1)Problema Ultimo devuelve el ultimo elemento de una lista
 
 ultimo :: [t] -> t
@@ -151,7 +151,7 @@ ordenar :: [Integer] -> [Integer]
 ordenar [] = []
 ordenar (x:xs) = mini (x:xs) : ordenar (sortearRepe (x:xs))
 
---Aca ayuda a la recursion a ordenar los que sean iguales
+--Aca ayudo a la recursion a ordenar los que sean iguales
 sortearRepe :: [Integer] -> [Integer]
 sortearRepe (x:xs) = quitar (mini (x:xs)) (x:xs)
 
@@ -220,7 +220,7 @@ sacarLista (x:xs) |x == ' ' = xs
 palabraMasLarga :: [Char] -> [Char]
 palabraMasLarga (x:xs) = maxCadena (palabras (x:xs)) (palabras (x:xs))
 
---Me devuelve de la cadena la palabra con mas characteres
+--Me devuelve de la cadena la palabra con mas caracteres
 maxCadena :: [[Char]] -> [[Char]] -> [Char]
 maxCadena (x:xs) [] = x 
 maxCadena [] (y:ys) = y
@@ -248,12 +248,61 @@ aplanarConNBlancos (x:xs) n |n == 0 = aplanar (x:xs)
                             |x /= [' '] = x ++ aplanarAux n ++ aplanarConNBlancos xs n
                             |otherwise = aplanarConNBlancos xs n
 
+--Defino la cantidad de blancos que van a tener las palabras entre si
 aplanarAux :: Integer -> [Char] 
 aplanarAux n |n == 1 = [' ']
              |otherwise = [' '] ++ aplanarAux (n-1)  
 
---EJERCICIO 6 (LISTAS LISTAS Y MAS LISTAS)  
-                                   
+--EJERCICIO 5 (LISTAS LISTAS Y MAS LISTAS)  
+--1)Suma acumulada
+
+--suma todos los elementos de una lista de num
+sumaParcial :: (Num t) => [t] -> t
+sumaParcial [] = 0
+sumaParcial (x:xs) = x + sumaParcial xs
+
+--va agregando las sumas acumuladas a una lista
+sumaAux :: (Num t) => [t] -> [t]
+sumaAux [] = []
+sumaAux (x:xs) = sumaParcial (x:xs) : sumaAux (principio (x:xs))
+
+--Arreglo el orden de la lista.
+sumaAcumulada :: (Num t) => [t] -> [t]
+sumaAcumulada (x:xs) = reverso (sumaAux (x:xs))
+
+--2)Dar una lista de listas con los numeros de la lista original descompuesta en primos
+
+descomponerEnPrimos :: [Integer] -> [[Integer]]
+descomponerEnPrimos [] = []
+descomponerEnPrimos (x:xs) = separoAux x : descomponerEnPrimos xs
+
+--Arreglo crecientemente
+separoAux :: Integer -> [Integer]
+separoAux n = reverso (separoEnPrimos n n)
+
+--Separo en una lista la descompocision de primos de cualquier numero
+separoEnPrimos :: Integer -> Integer -> [Integer]
+separoEnPrimos 1 _ = []
+separoEnPrimos n m |mod n (nPrimo m) == 0 = nPrimo m : separoEnPrimos (div n (nPrimo m)) m
+                   |otherwise = separoEnPrimos n (m-1)
+
+ --Todas las funciones que necesite para clasificar primos @.@ (estan en guia4.hs)
+
+nPrimo :: Integer -> Integer
+nPrimo n |n==1=2
+         |otherwise = siguientePrimo (nPrimo (n-1))
+
+siguientePrimo :: Integer -> Integer
+siguientePrimo n |esPrimo (n+1) = n + 1
+                 |otherwise = siguientePrimo (n+1)
+
+esPrimo :: Integer -> Bool
+esPrimo n = encontrarDivisor n 2 == n
+
+encontrarDivisor :: Integer -> Integer -> Integer
+encontrarDivisor n k | mod n k == 0 = k
+                     | k+1 > n = n
+                     | otherwise = encontrarDivisor n (k+1)                             
                       
                  
                                    
