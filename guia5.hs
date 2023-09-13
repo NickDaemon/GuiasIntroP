@@ -217,14 +217,18 @@ sacarLista (x:xs) |x == ' ' = xs
 
 --4)Devuelve la palabra mas larga de una lista
 
-palabraLarga :: [Char] -> [Char]
-palabraLarga (x:xs) = maxL (palabras (x:xs)) (palabras (x:xs))
+palabraMasLarga :: [Char] -> [Char]
+palabraMasLarga (x:xs) = maxCadena (palabras (x:xs)) (palabras (x:xs))
 
-maxL :: [[Char]] -> [[Char]] -> [Char]
-maxL [x] (y:ys) = y
-maxL (x:xs) [y] = x
-maxL (x:xs) (y:ys) |x >= head ys = maxL (x:xs) ys
-                   |otherwise = maxL xs (y:ys)                 
+--Me devuelve de la cadena la palabra con mas characteres
+maxCadena :: [[Char]] -> [[Char]] -> [Char]
+maxCadena (x:xs) [] = x 
+maxCadena [] (y:ys) = y
+maxCadena (x:xs) (y:ys) |length x >= length (head (y:ys)) = maxCadena (x:xs) ys
+                        |otherwise = maxCadena xs (y:ys)
+
+                 
+                                   
 
 
 
