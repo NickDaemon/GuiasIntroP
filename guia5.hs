@@ -227,6 +227,34 @@ maxCadena [] (y:ys) = y
 maxCadena (x:xs) (y:ys) |length x >= length (head (y:ys)) = maxCadena (x:xs) ys
                         |otherwise = maxCadena xs (y:ys)
 
+--5)A partir de una lista de palabras arma una lista de caracteres concatenandolas.
+
+aplanar :: [[Char]] -> [Char]
+aplanar [] = []
+aplanar (x:xs) = x ++ aplanar xs
+
+--6)Aplanar con blancos que inserta un blanco despues de cada lista concatenada
+
+aplanarConBlancos :: [[Char]] -> [Char]
+aplanarConBlancos [x] = x
+aplanarConBlancos (x:xs)|x /= [' '] = x ++ [' '] ++ aplanarConBlancos xs
+                        |otherwise  = aplanarConBlancos xs
+
+--7)aplanar con N blancos (n debe ser positivo)                        
+
+aplanarConNBlancos :: [[Char]] -> Integer -> [Char]
+aplanarConNBlancos [x] _ = x
+aplanarConNBlancos (x:xs) n |n == 0 = aplanar (x:xs)
+                            |x /= [' '] = x ++ aplanarAux n ++ aplanarConNBlancos xs n
+                            |otherwise = aplanarConNBlancos xs n
+
+aplanarAux :: Integer -> [Char] 
+aplanarAux n |n == 1 = [' ']
+             |otherwise = [' '] ++ aplanarAux (n-1)  
+
+--EJERCICIO 6 (LISTAS LISTAS Y MAS LISTAS)  
+                                   
+                      
                  
                                    
 
