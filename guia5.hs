@@ -189,7 +189,7 @@ contarPalabras (x:xs) |x == ' ' = contarAux1 (x:xs)
 contarAux :: [Char] -> Integer
 contarAux [] = 1
 contarAux (x:xs)|x == ' ' = 1 + contarAux (sacarBRepes xs)
-                 |otherwise = contarAux xs
+                |otherwise = contarAux xs
 
 --Cuenta las palabras si inicia con un blanco
 contarAux1 :: [Char] -> Integer
@@ -212,7 +212,7 @@ listaP (x:xs) |x /= ' ' = x : listaP xs
 sacarLista :: [Char] -> [Char]
 sacarLista [] = []
 sacarLista (x:xs) |x == ' ' = xs
-                   |otherwise = sacarLista xs
+                  |otherwise = sacarLista xs
 
 
 --4)Devuelve la palabra mas larga de una lista

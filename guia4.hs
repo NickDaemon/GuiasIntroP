@@ -63,7 +63,13 @@ iesimoD n m = mod (div n (10^((cantD n)-m))) 10
 
 --9)Implementar la funcion esCapicua que determina si un numero n es capicua.
 
---a completar T-T
+capicua :: Integer -> Bool
+capicua n = capicuaAux n n
+
+capicuaAux :: Integer -> Integer -> Bool
+capicuaAux n m |(n - (m - 1)) > cantD n = True
+               |iesimoD n (n - (m-1)) == mod n 10 = capicuaAux (div n 10) ((div m 10) -1)
+               |otherwise = False
 
 --10)a)
 
@@ -190,23 +196,17 @@ esFibAux n m |m==0=False
 
 --18)Implementar una funci´on mayorDigitoPar que me devuelve el digito par mas grande de n ,sino tiene devuelve -1
 
-
-
 mayorDigitoPar :: Integer -> Integer
 mayorDigitoPar n = auxPar n n
 
 auxPar :: Integer -> Integer -> Integer
 auxPar n m |m==0= parImpar n
            |n==0= parImpar m
-           |sacarPar (ultDig n) > sacarPar (ultDig (div m 10)) = auxPar n (div m 10)
-           |sacarPar (ultDig n) == sacarPar (ultDig (div m 10))= auxPar n (div m 10)
+           |sacarPar (mod n 10) >= sacarPar (mod (div m 10) 10) = auxPar n (div m 10)
            |otherwise = auxPar (div n 10) m
-           where parImpar n |mod n 2 == 0 = ultDig n
+           where parImpar n |mod n 2 == 0 = mod n 10
                             |otherwise = -1
                        
-ultDig :: Integer -> Integer 
-ultDig n = mod n 10
-
 sacarPar :: Integer -> Integer
 sacarPar n |mod n 2 == 0 = n
            |otherwise = 0
