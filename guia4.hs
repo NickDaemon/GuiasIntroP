@@ -64,12 +64,12 @@ iesimoD n m = mod (div n (10^((cantD n)-m))) 10
 --9)Implementar la funcion esCapicua que determina si un numero n es capicua.
 
 capicua :: Integer -> Bool
-capicua n = capicuaAux n n
+capicua n |n == reversoA n = True
+          |otherwise = False
 
-capicuaAux :: Integer -> Integer -> Bool
-capicuaAux n m |(n - (m - 1)) > cantD n = True
-               |iesimoD n (n - (m-1)) == mod n 10 = capicuaAux (div n 10) ((div m 10) -1)
-               |otherwise = False
+reversoA :: Integer -> Integer
+reversoA n |mod n 10 == n = n
+           |otherwise = (mod n 10) * 10^((cantD n) - 1) + reversoA (div n 10)
 
 --10)a)
 
