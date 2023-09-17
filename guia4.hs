@@ -1,3 +1,7 @@
+import Test.HUnit    
+       
+
+
 -- 1)Implementar la sucesion de fibbonacci.
 fib :: Integer -> Integer
 fib 0 = 0
@@ -10,13 +14,27 @@ parteEntera :: Float -> Integer
 parteEntera n |n < 1 = 0
               |otherwise = parteEntera (n-1) + 1
 
+testSuiteParteEnt = test [
+        "caso sin decimal" ~: (parteEntera 2) ~?= 2 ,
+        "caso con decimal" ~: (parteEntera 2.2) ~?= 2 
+        ]
+
+correrTests = runTestTT testSuiteParteEnt
+
+
 --3)Implementar la funcion esDivisible que dados dos n´umeros naturales determinar si el primero
 --es divisible por el segundo.
 
 esDivisible :: Integer -> Integer -> Bool
 esDivisible n m |(n-m)==0 = True
                 |(n-m) < 0 = False
-                |otherwise = esDivisible (n-m) m    
+                |otherwise = esDivisible (n-m) m 
+
+testSuiteEsDivisible = test [
+        "no es divisible" ~: (esDivisible 10 3) ~?= False,
+        "es divisible"    ~: (esDivisible 10 5) ~?= True
+        ]
+correrTests3 = runTestTT testSuiteEsDivisible                           
 
 --4)Implementar la funci´on sumaImpares que dado un n suma los primeros n impares
 
@@ -33,6 +51,14 @@ medioFact :: Integer -> Integer
 medioFact n |n == 0 = 1
             |n == 1 = 1
             |otherwise = n*medioFact (n-2)
+
+testSuiteMedioFactorial = test [
+        "caso base 1" ~: (medioFact 0) ~?= 1,
+        "caso base 2" ~: (medioFact 1) ~?= 1,
+        "caso distinto" ~: (medioFact 2) ~?= 2
+        ]
+
+correrTests2 = runTestTT testSuiteMedioFactorial                   
 
 --6)Implementar la funci´on sumaDigitos que calcula la suma de d´ıgitos de un n´umero
 --natural.     
