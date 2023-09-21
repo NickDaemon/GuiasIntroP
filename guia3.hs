@@ -1,25 +1,16 @@
 -- 1.a:Implentar la funcion parcial f definida de la siguiente manera:
-fa(1) = 8
-fa(4) = 131
-fa(16) = 16
-
 f :: Integer -> Integer
 f n | n == 1 = 8
     | n == 4 = 131
     | n == 16 = 16
 
 -- 1.b:Implementar la funcion parcial g definida como:
-gb(8) = 16
-gb(16) = 4
-gb(131) = 1
-
 g :: Integer -> Integer
 g n | n==8=16
     | n==16=4
     | n==131=1
 
-
--- 1.c :A partir de las funciones definidas en los ´ıtems 1 y 2, implementar las funciones parciales h = f ◦ g y k = g ◦ f
+-- 1.c :A partir de las funciones definidas en los ıtems 1 y 2, implementar las funciones parciales h = f ◦ g y k = g ◦ f
 
 h :: Integer -> Integer
 h n = f (g n)
@@ -31,33 +22,31 @@ j n = g (f n)
 -- a = absoluto: calcula el valor absoluto de un n´umero entero.
 
 absolut :: Float -> Float
-absolut n | n < 0 = (-1)*n
-          |otherwise = n
+absolut n 
+    |n < 0 = (-1)*n
+    |otherwise = n
 
--- b = maximoabsoluto: devuelve el m´aximo entre el valor absoluto de dos n´umeros enteros.
+-- b = maximoabsoluto: devuelve el maximo entre el valor absoluto de dos n´umeros enteros.
 
-maximoabsoluto :: Float -> Float -> Float
-maximoabsoluto n p |absolut n <= absolut p = absolut p
-                   |otherwise = absolut n
-
--- c = maximo3: devuelve el m´aximo entre tres n´umeros enteros.
+maximoAbsoluto :: Float -> Float -> Float
+maximoAbsoluto n m = max (absolut n) (absolut m)
+   
+-- c = maximo3: devuelve el maximo entre tres numeros enteros.
 
 maximo3 :: Integer -> Integer -> Integer -> Integer
 maximo3 n p q = max n (max p q)
 
--- d = algunoEs0: dados dos n´umeros racionales, decide si alguno de los dos es igual a 0
+-- d = algunoEs0: dados dos numeros racionales, decide si alguno de los dos es igual a 0
 
 algunoEs0 :: Float -> Float -> Bool
-algunoEs0 n m |n==0 || m==0 = True
-              |otherwise = False
+algunoEs0 n m = n == 0 || m == 0
 
--- e = ambosSon0:dados dos n´umeros racionales, decide si ambos son iguales a 0 
+-- e = ambosSon0:dados dos numeros racionales, decide si ambos son iguales a 0 
 
 ambosSon0 :: Float -> Float -> Bool
-ambosSon0 n m |n==0 && m==0 = True
-              |otherwise = False
+ambosSon0 n m = (n == 0) && (m == 0)
 
--- f = mismoIntervalo: dados dos n´umeros reales, indica si est´an relacionados considerando la relaci´on de equivalencia en R
+-- f = mismoIntervalo: dados dos numeros reales, indica si estan relacionados considerando la relaci´on de equivalencia en R
 -- cuyas clases de equivalencia son: (−∞, 3],(3, 7] y (7, ∞), o dicho de otra forma, si pertenecen al mismo intervalo.    
 
 mismoIntervalo :: Integer -> Integer -> Bool
@@ -75,19 +64,18 @@ sumaDistintos n m p |n/=m && m/=p && n/=p = n + m + p
                     |n==m && m==p = 0
                     |n/=m && m==p = n + m
 
--- h = esMultiploDe: dados dos n´umeros naturales, decidir si el primero es m´ultiplo del segundo. 
+-- h = esMultiploDe: dados dos numeros naturales, decidir si el primero es m´ultiplo del segundo. 
 
 esMultiploDe :: Int -> Int -> Bool
-esMultiploDe n m |mod n m == 0 = True
-                 |otherwise = False
+esMultiploDe n m = mod n m == 0
 
--- i = digitoUnidades: dado un n´umero natural, extrae su d´ıgito de las unidades
-i :: Integer -> Integer
-i n = mod n 10
+-- i = digitoUnidades: dado un numero natural, extrae su dıgito de las unidades
+digitoUnidades:: Integer -> Integer
+digitoUnidades n = mod n 10
 
--- j = digitoDecenas: dado un n´umero natural, extrae su d´ıgito de las decenas.
-js :: Integer -> Integer
-js n = mod (div n 10) 10
+-- j = digitoDecenas: dado un numero natural, extrae su dıgito de las decenas.
+digitoDecenas :: Integer -> Integer
+digitoDecenas n = mod (div n 10) 10
 
 -- 3) Estan relacionados
 
@@ -121,12 +109,12 @@ sumaTerna (n,m,p) = n + m + p
 --e)sumarSoloMultiplos: dada una terna de n´umeros enteros y un natural, calcula la suma de los elementos de la terna que
 --son m´ultiplos del n´umero natural
 
-esM :: Integer -> Integer -> Integer
-esM n m |mod n m == 0 = n
+esMultiplo :: Integer -> Integer -> Integer
+esMultiplo n m |mod n m == 0 = n
         |otherwise = 0
 
-sumaMult :: (Integer,Integer,Integer) -> Integer -> Integer
-sumaMult (n,m,p) q = (esM n q) + (esM m q) + (esM p q)
+sumaMultiplo :: (Integer,Integer,Integer) -> Integer -> Integer
+sumaMultiplo (n,m,p) q = (esMultiplo n q) + (esMultiplo m q) + (esMultiplo p q)
 
 
 
@@ -134,10 +122,11 @@ sumaMult (n,m,p) q = (esM n q) + (esM m q) + (esM p q)
 --4 si son todos impares.  
 
 posPrimerPar :: (Int,Int,Int) -> Int
-posPrimerPar (n,m,p) |mod n 2 == 0 = 0
-                     |mod n 2 /= 0 && mod m 2 == 0 = 1
-                     |mod n 2 /= 0 && mod m 2 /= 0 && mod p 2 == 0 = 2
-                     |otherwise = 4
+posPrimerPar (n,m,q) 
+    |mod n 2 == 0 = 1
+    |mod m 2 == 0 = 2
+    |mod q 2 == 0 = 3
+    |otherwise = 4
 
 --g)crearPar:crea un par a partir de sus dos componentes dadas por separado (debe funcionar para
 --elementos de cualquier tipo).   
