@@ -1,6 +1,5 @@
 import Test.HUnit    
-       
-
+--                             Recursion Sobre Enteros
 
 -- 1)Implementar la sucesion de fibbonacci.
 fib :: Integer -> Integer
@@ -36,14 +35,11 @@ testSuiteEsDivisible = test [
         ]
 correrTests3 = runTestTT testSuiteEsDivisible                           
 
---4)Implementar la funci´on sumaImpares que dado un n suma los primeros n impares
+--4)Implementar la funcion sumaImpares que dado un n suma los primeros n impares
 
-impares :: Integer -> Integer
-impares n = 2*n - 1
-
-sumaImpares :: Integer -> Integer
-sumaImpares n |n == 1 = 1
-              |otherwise = impares n + sumaImpares (n-1)
+sumaImpares :: Int -> Int
+sumaImpares 1 = 1
+sumaImpares n = 2*n - 1 + sumaImpares (n-1)
 
 --5)Implementar la funci´on medioFact que dado un n calcula n!!
 
@@ -60,28 +56,24 @@ testSuiteMedioFactorial = test [
 
 correrTests2 = runTestTT testSuiteMedioFactorial                   
 
---6)Implementar la funci´on sumaDigitos que calcula la suma de d´ıgitos de un n´umero
+--6)Implementar la funcion sumaDigitos que calcula la suma de d´ıgitos de un n´umero
 --natural.     
 
 sumaDigitos :: Integer -> Integer
 sumaDigitos n |div n 10 == 0 = n
               |otherwise = mod n 10 + sumaDigitos (div n 10)
 
---7)Implementar la funci´on todosDigitosIguales que determina si todos los digitos de un numero son iguales
+--7)Implementar la funcion todosDigitosIguales que determina si todos los digitos de un numero son iguales
+digitosIguales :: Integer -> Bool
+digitosIguales n 
+    |n < 10 = True
+    |mod n 10 == mod (div n 10) 10 = digitosIguales (div n 10)
+    |otherwise = False
 
-primerDigito :: Integer -> Integer
-primerDigito n |div n 10 == 0 = n
-               |otherwise = primerDigito (div n 10)
-
-todosDiguales :: Integer -> Bool
-todosDiguales n |div n 10 == 0 = True
-                |mod n 10 == primerDigito n = todosDiguales (div n 10)
-                |otherwise = False
-
---8)Implementar la funci´on iesimoDigito que dado un n0 y un m devuelve la pocision m de n.
+--8)Implementar la funcion iesimoDigito que dado un n0 y un m devuelve la pocision m de n.
 
 cantD :: Integer -> Integer
-cantD n |div n 10 == 0 = 1
+cantD n |n < 10 = 1
         |otherwise = 1 + cantD (div n 10)
 
 iesimoD :: Integer -> Integer -> Integer
@@ -90,8 +82,7 @@ iesimoD n m = mod (div n (10^((cantD n)-m))) 10
 --9)Implementar la funcion esCapicua que determina si un numero n es capicua.
 
 capicua :: Integer -> Bool
-capicua n |n == reversoA n = True
-          |otherwise = False
+capicua n = n == reversoA n
 
 reversoA :: Integer -> Integer
 reversoA n |mod n 10 == n = n
@@ -121,17 +112,15 @@ f4Aux n i q | i == n = q^n
             | otherwise = q^n + f4Aux (n-1) i q
 
 
---11)a)Implementar una funci´on eAprox que aproxima el valor de e.
+--11)a)Implementar una funcion eAprox que aproxima el valor de e.
 
-fact :: Float -> Float
-fact n |n == 0 = 1
-       |n == 1 = 1
-       |otherwise = n*fact (n-1)
+eAprox :: Integer -> Float
+eAprox 0 = 1
+eAprox n = (1 / (fromIntegral (fact n))) + eAprox (n-1)  
 
-
-eAprox :: Float -> Float
-eAprox n |n==0=1
-         |otherwise= (1 / fact n) + eAprox (n-1)
+fact :: Integer -> Integer 
+fact 0 = 1
+fact n = n * fact (n-1)
 
 --12)Raiz de 2 aprox
 
@@ -176,22 +165,18 @@ sumaRacAux n m |m==0=0
 --16)a)Implementar menorDivisor que calcula el menor divisor > 1 de un n 
 
 menorDivisor :: Integer -> Integer
-menorDivisor n |n==1=1
-               |mod n 2 == 0 = 2
-               |otherwise = menorDivisorAux n n
+menorDivisor n = encontrarDivisor n 2
 
-menorDivisorAux :: Integer -> Integer -> Integer
-menorDivisorAux n m  |mod n (auxD n m) == 0 = auxD n m
-                     |otherwise = menorDivisorAux n (m-1)
-
-auxD :: Integer -> Integer -> Integer
-auxD n m = ((2*(n - (m-1))) + 1)           
+encontrarDivisor :: Integer -> Integer -> Integer
+encontrarDivisor n k | mod n k == 0 = k
+                     | k+1 > n = n
+                     | otherwise = encontrarDivisor n (k+1)           
                    
 --b)Implementar la funcion esPrimo , que me dice si un n es primo
+
 esPrimo :: Integer -> Bool
-esPrimo n |n==1=False
-          |menorDivisor n == n = True
-          |otherwise = False
+esPrimo 1 = False
+esPrimo n = menorDivisor n == n
 
 --c)Implementar la funcion sonCoprimos
 sonCoprimos :: Integer -> Integer -> Bool
