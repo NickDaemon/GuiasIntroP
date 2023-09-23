@@ -1,5 +1,8 @@
 --EJERCICIO 1 (PRIMEROS CONCEPTOS DE RECURSION EN LISTAS)
 --1)Problema Ultimo devuelve el ultimo elemento de una lista
+longitud :: [t] -> Integer
+longitud [] = 0
+longitud (x:xs) = 1 + longitud xs
 
 ultimo :: [t] -> t
 ultimo [x] = x
@@ -73,7 +76,7 @@ elimRepes (x:xs) |pertenece x xs = x : quitarTodos x (elimRepes xs)
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool     
 mismosElementos (x:xs) (y:ys) |gotchu (x:xs) (y:ys) && gotchu (y:ys) (x:xs) = True
                               |otherwise = False 
-                              
+
 gotchu :: (Eq t) => [t] -> [t] -> Bool
 gotchu [] (y:ys) = True
 gotchu (x:xs) (y:ys)  |pertenece x (elimRepes (y:ys)) = gotchu xs (y:ys)
@@ -154,66 +157,66 @@ mini (x:xs) |x <= ultimo (x:xs) = mini (principio (x:xs))
 --EJERCICIO 4 (LISTAS DE CHAR)
 --1)sacarBlancosRepetidos deja solo un espacio blanco entre palabras
 
---Arreglo que no inicie ni termine con blancos
-sacarBRepes :: [Char] -> [Char]
-sacarBRepes (x:xs) |head (sacarAux (x:xs)) == ' ' && ultimo (sacarAux (x:xs)) == ' ' = quitar x (principio (sacarAux (x:xs)))
-                   |head (sacarAux (x:xs)) == ' ' && ultimo (sacarAux (x:xs)) /= ' ' = sacarAux xs
-                   |head (sacarAux (x:xs)) /= ' ' && ultimo (sacarAux (x:xs)) == ' ' = principio (sacarAux (x:xs))
-                   |otherwise = sacarAux (x:xs)
-                             
 --Aca devuelvo la lista con maximo 1 blanco , ya sea iniciando o terminando 
-sacarAux :: [Char] -> [Char]
-sacarAux [x] = [x]
-sacarAux (x:xs) |x == ' ' && head xs == ' ' = sacarAux xs
-                |x /= ' ' = x : sacarAux xs
-                |otherwise = x : sacarAux xs
+sacarBrepes :: [Char] -> [Char]
+sacarBrepes [x] = [x]
+sacarBrepes (x:xs) |x == ' ' && head xs == ' ' = sacarBrepes xs
+                |x /= ' ' = x : sacarBrepes xs
+                |otherwise = x : sacarBrepes xs
+
+--No inicia ni termina con Blancos
+sacarBextremos :: [Char] -> [Char]
+sacarBextremos (x:xs) 
+    |x == ' ' && ultimo (x:xs) == ' ' = quitar x (principio (sacarBrepes (x:xs)))
+    |x == ' ' && ultimo (x:xs) /= ' ' = quitar x (sacarBrepes (x:xs))
+    |x /= ' ' && ultimo (x:xs) == ' ' = principio (sacarBrepes (x:xs))
+    |otherwise = sacarBrepes (x:xs)             
 
 --2)contar Palabras
 contarPalabras :: [Char] -> Integer
-contarPalabras (x:xs) |x == ' ' = contarAux1 (x:xs)
-                      |otherwise = contarAux (x:xs)
+contarPalabras (x:xs) 
+    |ultimo (x:xs) == ' ' = contarAux (x:xs) - 1
+    |otherwise = contarAux (x:xs)
 
---Cuenta las palabras sino inicia con blanco
 contarAux :: [Char] -> Integer
-contarAux [] = 1
-contarAux (x:xs)|x == ' ' = 1 + contarAux (sacarBRepes xs)
-                |otherwise = contarAux xs
+contarAux [x] = 1
+contarAux (x:y:xs) 
+    |x /= ' ' && y == ' ' = 1 + contarAux (y:xs)
+    |otherwise = contarAux (y:xs)
 
---Cuenta las palabras si inicia con un blanco
-contarAux1 :: [Char] -> Integer
-contarAux1 [] = 1
-contarAux1 (x:xs) = contarAux (x:xs) - 1
+--3)Palabras
+palabras :: [Char] -> [[Char]]
+palabras (x:xs) = palabrasAux (sacarBextremos (x:xs))
 
---3)Dada una lista arma una nueva lista con las palabras de la lista original.
+--Devuelve una lista con las palabras formadas de una lista
+palabrasAux :: [Char] -> [[Char]]
+palabrasAux [] = []
+palabrasAux (x:xs) = laPrimerP (x:xs) : palabrasAux (sacarP (x:xs))
 
-palabras :: [Char] -> [[Char]] 
-palabras [] = []
-palabras (x:xs) = listaP (sacarBRepes (x:xs)) : palabras (sacarLista (sacarBRepes (x:xs)))
+--La primer palabra fromada en cualquier lista.
+laPrimerP :: [Char] -> [Char]
+laPrimerP [] = []
+laPrimerP (x:xs) 
+    |x /= ' ' = x : laPrimerP xs
+    |otherwise = []
 
---Me devuelve la primer palabra que se forma en cualquier lista
-listaP :: [Char] -> [Char]
-listaP [] = []
-listaP (x:xs) |x /= ' ' = x : listaP xs
-              |otherwise = []
+--Saco la primer palabra formada sino inicia con un blanco.
+sacarP :: [Char] -> [Char]
+sacarP [] = []
+sacarP (x:xs) 
+    |x == ' ' = xs
+    |otherwise = sacarP xs
 
---Saca la primer Palabra de la lista
-sacarLista :: [Char] -> [Char]
-sacarLista [] = []
-sacarLista (x:xs) |x == ' ' = xs
-                  |otherwise = sacarLista xs
-
-
---4)Devuelve la palabra mas larga de una lista
+--4)PalabraMasLarga
 
 palabraMasLarga :: [Char] -> [Char]
-palabraMasLarga (x:xs) = maxCadena (palabras (x:xs)) (palabras (x:xs))
+palabraMasLarga (x:xs) = theBigOne (palabras (x:xs))
 
---Me devuelve de la cadena la palabra con mas caracteres
-maxCadena :: [[Char]] -> [[Char]] -> [Char]
-maxCadena (x:xs) [] = x 
-maxCadena [] (y:ys) = y
-maxCadena (x:xs) (y:ys) |length x >= length (head (y:ys)) = maxCadena (x:xs) ys
-                        |otherwise = maxCadena xs (y:ys)
+theBigOne :: [[Char]] -> [Char]
+theBigOne [x] = x
+theBigOne (x:y:xs) 
+    |longitud x >= longitud y = theBigOne (x:xs)
+    |otherwise = theBigOne (y:xs)
 
 --5)A partir de una lista de palabras arma una lista de caracteres concatenandolas.
 
