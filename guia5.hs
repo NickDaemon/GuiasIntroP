@@ -23,10 +23,9 @@ pertenece n (x:xs) |x == n = True
                    |otherwise = pertenece n xs
 
 --2)Implementar todosIguales que indica si todos los elementos de una lista son iguales
-todosIguales :: (Eq t) => [t] -> Bool
+todosIguales ::(Eq t) => [t] -> Bool
 todosIguales [x] = True
-todosIguales (x:xs) |x == head xs = todosIguales xs
-                    |otherwise = False   
+todosIguales (x:y:xs) = x == y && todosIguales (y:xs)  
 
 --3)Implementar todosDistintos que es el reverso de todosIguales
 
@@ -37,8 +36,7 @@ todosDistintos (x:xs) |x /= ultimo (x:xs) = todosDistintos (principio (x:xs))
 
 todosDistintos2 :: (Eq t) => [t] -> Bool
 todosDistintos2 [x] = True
-todosDistintos2 (x:xs) |pertenece x xs = False
-                       |otherwise = todosDistintos2 xs 
+todosDistintos2 (x:xs) = not (pertenece x xs) && todosDistintos2 xs 
 
 --4)Implementar hayRepetidos que dice si hay elementos repetidos en una lista
 hayRepetidos :: (Eq t) => [t] -> Bool
@@ -57,11 +55,11 @@ quitar n (x:xs) |pertenece n (x:xs) == False = (x:xs)
 
 --6)Implementar quitarTodos que quita todos los elementos n de una lista si los tuviese
 
-quitarTodos :: (Eq t ) => t -> [t] -> [t]
+quitarTodos :: (Eq t) => t -> [t] -> [t]
 quitarTodos n [] = []
-quitarTodos n (x:xs) |pertenece n (x:xs) == False = (x:xs)
-                     |n /= x = x : quitarTodos n xs
-                     |n == x = quitarTodos n xs
+quitarTodos n (x:xs)
+    |n == x = quitarTodos n xs
+    |n /= x = x : quitarTodos n xs
 
 --7)Implementar eliminarRepetidos que solo deja una unica aparicion de cada elem de una lista
 
@@ -72,15 +70,16 @@ elimRepes (x:xs) |pertenece x xs = x : quitarTodos x (elimRepes xs)
 
 --8)Implementar mismosElementos que devuelve true si ambas listas contienen los mismos elem
 --sin contar repeticiones
-
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool     
+mismosElementos (x:xs) (y:ys) |gotchu (x:xs) (y:ys) && gotchu (y:ys) (x:xs) = True
+                              |otherwise = False 
+                              
 gotchu :: (Eq t) => [t] -> [t] -> Bool
 gotchu [] (y:ys) = True
 gotchu (x:xs) (y:ys)  |pertenece x (elimRepes (y:ys)) = gotchu xs (y:ys)
                       |otherwise = False 
 
-mismosElementos :: (Eq t) => [t] -> [t] -> Bool     
-mismosElementos (x:xs) (y:ys) |gotchu (x:xs) (y:ys) && gotchu (y:ys) (x:xs) = True
-                              |otherwise = False                                           
+                                          
 
 --9)esCapicua
 
@@ -103,10 +102,11 @@ productoria [x] = x
 productoria (x:xs) = x * productoria xs
 
 --3)Maximo
-maximus :: [Integer] -> Integer 
-maximus [x] = x 
-maximus (x:xs) |x >= ultimo (x:xs) = maximus (principio (x:xs))
-               |otherwise = maximus xs
+maximus :: [Integer] -> Integer   
+maximus [x] = x
+maximus (x:y:xs) 
+    |x >= y = maximus (x:xs)
+    |otherwise = maximus (y:xs)
 
 --4)Sumar N 
 
@@ -116,44 +116,32 @@ sumarN n (x:xs) = x + n : sumarN n xs
 
 --5)sumar el primero
 
-sumarElPrimero :: [Integer] -> [Integer]
-sumarElPrimero [] = []
-sumarElPrimero (x:xs) = sumarAux (x:xs) (x:xs)
-
-sumarAux :: [Integer] -> [Integer] -> [Integer]
-sumarAux (x:xs) [] = []
-sumarAux (x:xs) (y:ys) = x + y : sumarAux (x:xs) ys
+sumarElPrimero :: [Integer] -> [Integer] 
+sumarElPrimero (x:xs) = sumarN x (x:xs)
 
 --6)sumar el ultimo
 
-sumarElUltimo:: [Integer] -> [Integer]
-sumarElUltimo [] = []
-sumarElUltimo (x:xs) = sumarAux2 (x:xs) (x:xs)
-
-sumarAux2 :: [Integer] -> [Integer] -> [Integer]
-sumarAux2 (x:xs) [] = []
-sumarAux2 (x:xs) (y:ys) = ultimo (x:xs) + y : sumarAux2 (x:xs) ys
+sumarElUltimo :: [Integer] -> [Integer]
+sumarElUltimo (x:xs) = sumarN (ultimo (x:xs)) (x:xs)
 
 --7)Pares , solo devuelve la lista con elementos pares contando repes.
 pares :: [Integer] -> [Integer]
 pares [] = []
-pares (x:xs) |mod x 2 == 0 = x : pares xs
-             |otherwise = pares xs
+pares (x:xs) 
+    |mod x 2 == 0 = x : pares xs
+    |otherwise = pares xs
 
 --8)idem que pares pero con multiplos de un n
 multiplosDeN :: Integer -> [Integer] -> [Integer]
 multiplosDeN n [] = []
-multiplosDeN n (x:xs) |mod x n == 0 = x : multiplosDeN n xs
+multiplosDeN n (x:xs) 
+    |mod x n == 0 = x : multiplosDeN n xs
                       |otherwise = multiplosDeN n xs    
 
 --9)ordenar en forma creciente la lista.
 ordenar :: [Integer] -> [Integer]
 ordenar [] = []
-ordenar (x:xs) = mini (x:xs) : ordenar (sortearRepe (x:xs))
-
---Aca ayudo a la recursion a ordenar los que sean iguales
-sortearRepe :: [Integer] -> [Integer]
-sortearRepe (x:xs) = quitar (mini (x:xs)) (x:xs)
+ordenar (x:xs) = mini (x:xs) : ordenar (quitar (mini (x:xs)) (x:xs))
 
 --Aca defino el primer elemento de la lista
 mini :: [Integer] -> Integer 
