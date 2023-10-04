@@ -205,9 +205,47 @@ def viaje_al_pasado(partida:int,llegada:int) -> None:
     while llegada < partida:
         partida-=1
         print("Viajó un año al pasado, estamos en el año", partida)
-        
+
 #6.6
 def conocer_a_Aristoteles(partida: int):
     while partida-20 >= -384:
         partida -=20
-        print("Viajó un año al pasado, estamos en el año", partida)
+        print("Viajó 20 años al pasado, estamos en el año", partida)
+
+#7.1
+def seis_uno() -> None:
+    for i in range(1,11,1):
+        print(i)
+
+#7.2
+def seis_dos() -> None:
+    for i in range(10,41,2):
+        print(i)
+
+#7.3
+def seis_tres() -> None:
+    for i in range(1,11,1):
+        print("eco")
+
+#7.4
+def seis_cuatro(x:int) -> None:
+    for i in range(x,-1,-1):
+        if i != 0:
+            print(i)
+        else:
+            print("Despegue!!")  
+
+#7.5
+def seis_cinco(partida:int,llegada:int) -> None:
+    for i in range(partida - 1,llegada - 1,-1):
+        print("Viajó un año al pasado, estamos en el año", i)
+
+#7.6
+def seis_seis(partida:int) -> None:
+    for i in range(partida - 20,-383,-20):
+        print("Viajó 20 años al pasado, estamos en el año", i)
+
+       
+
+
+
