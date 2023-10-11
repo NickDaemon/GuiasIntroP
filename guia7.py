@@ -208,27 +208,26 @@ def siete_y_medio() -> list[int]:
     cartas:list[float] = [1,2,3,4,5,6,7,0.5,0.5,0.5]
     inicio:int = random.choice(cartas)
     historial = [inicio]
-    while True:
-        if suma_total(historial) <= 7.5:
-            jugada = random.randint(1,12)
-            decision = input(f"Hasta ahora: {inicio}\nQue desea hacer?\n'A' Sacar otra carta:\n'B' Plantarse:\n\n")
-            if decision == "A" and jugada in [8,9]:
+    while suma_total(historial) <= 7.5:
+        jugada = random.randint(1,12)
+        decision = input("Que desea hacer?:\n'A' Sacar otra carta\n'B' Plantarse\n\n")
+        if decision == "A" and jugada in [8,9]:
                 inicio+=0
-                print(f"Sacaste :{jugada} pero no cuenta! Tienes otro intento!")
-            elif decision == "A" and jugada in [10,11,12]:
+                
+        elif decision == "A" and jugada in [10,11,12]:
                 inicio+=0.5
                 historial.append(0.5) 
-                print(f"Sacaste:{jugada} pero vale 0.5")
-            elif decision == "A" and jugada not in [10,11,12]:
+                
+        elif decision == "A" and jugada not in [10,11,12]:
                 inicio+=jugada
                 historial.append(jugada)
-                print(f"Sacaste:{jugada}")
-            elif decision == "B":
-                print("Ganaste!")
+                
+        elif decision == "B":
                 break
-        else:
-            print("Perdiste! Te pasaste!")
-            break
+    if suma_total(historial) > 7.5:
+        print(f"Perdiste te pasaste!! {historial}")
+    else:
+        print(f"Ganaste!! {historial}")    
     return historial         
         
            
@@ -238,7 +237,7 @@ def siete_y_medio() -> list[int]:
             
 
 
-siete()                         
+                       
   
                       
          
