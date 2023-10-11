@@ -1,271 +1,317 @@
-#                              GUIA 7 WHAT NOW?
+#                                 GUIA 7 WHAT NOW??
+import random
 
 #1.1
-def pertenece1(s:list[int],x:int) -> bool:
-    if x in s :
-        res:bool = True
-    else:
-        res:bool = False
-    return res
-
-def pertenece2(s:list[int], x: int) -> bool:
-    res:bool = False
-    for i in s:
+def pertenece(lista:list[any],x:any) -> bool:
+    res:bool=False
+    for i in lista:
         if i == x:
-            res:bool = True
-    return res           
-
-def pertenece3(s:list[int],x:int) -> bool:
-    res:bool = False
-    indice = 0
-    while indice < len(s):
-        if s[indice] == x:
             res:bool=True
-        indice += 1    
-    return res        
-
-def pertenece4(s:list[any], x:any) -> bool:
-    if x in s :
-        res:bool = True
-    else:
-        res:bool = False
     return res
-
-'''En pertenece4 veo que se puede buscar un char en un string con un 
-   pertenece de tipo generico.'''
 
 #1.2
-def divide_a_todos(s:list[int],e:int) -> bool:
-    res:bool = True
-    for i in s:
-        if i%e != 0:
-            res:bool = False
-    return res   
-
-def divide_a_todos2(s:list[int],e:int) -> bool:
-    indice:int = 0
-    res:bool = True
-    while indice < len(s):
-        if s[indice]%e != 0:
-            res:bool = False
-        indice += 1
-    return res  
+def divide_a_todos(lista:list[int],x:int) -> bool:
+    res:bool=True
+    for i in lista:
+        if i%x != 0:
+            res:bool=False
+    return res
 
 #1.3
-def suma_total(s:list[int]) -> int:
-    res:int= 0 
-    for i in s:
-        res += i
+def suma_total(lista:list[int]) -> int:
+    res:int=0
+    for i in lista:
+        res+=i
     return res
-
-def suma_total2(s:list[int]) -> int:
-    indice:int = 0
-    res:int = 0
-    while indice < len(s):
-        res += s[indice]
-        indice += 1    
-    return res   
 
 #1.4
-def ordenado(s:list[int]) -> bool:
-    indice:int = 0
-    res:bool = True
-    while indice < len(s) - 1:
-        if s[indice] > s[indice + 1]:
-            res:bool = False
-        indice +=1
-    return res        
-
-def ordenado2(s:list[int]) -> bool:
-    res:bool = True
-    for i in range(len(s)-1):
-        if s[i] > s[i+1]:
-            res:bool = False
-    return res
+def ordenados(lista:list[int]) -> bool:
+    res:bool=True
+    for i in range(len(lista)-1):
+        if lista[i] > lista[i+1]:
+            res:bool=False
+    return res  
 
 #1.5
-def la_tiene_larga(s:list[str]) -> bool:
-    res:bool = False
-    for i in s:
-        if len(i) >= 7:
-            res:bool= True
-    return res     
-
-def la_tiene_larga_2(s:list[str]) -> bool:
-    indice:int = 0
-    res:bool = False
-    while indice < len(s):
-        if len(s[indice]) >= 7:
-            res:bool = True
-        indice +=1
+def la_tiene_larga(palabras:list[str]) -> bool:
+    res:bool=False
+    for palabra in palabras:
+        if len(palabra) >= 7:
+            res:bool=True
     return res
 
 #1.6
-def palindromo(s:list[str]) -> bool:
-    if reverso(s) == cadena(s):
-        res:bool = True
-    else:
-        res:bool = False
-    return res
+def palindromo(texto: str) -> bool:
+    texto = aplanar(texto.lower())  #Convierto en minusculas las mayusculas
+    return texto == aplanar(reverso(texto))
 
-def reverso(s:list[str]) -> list[str]:
-    l = []
-    for i in range(len(s) - 1 , -1, -1):
-        if s[i] != ' ':
-            l.append(s[i])
-    return l
+def aplanar(texto:str) -> str:
+    sin_blancos:str=''
+    for i in range(len(texto)):
+        if texto[i] != ' ':
+            sin_blancos += texto[i]
+    return sin_blancos
 
-def cadena(s:list[str]) -> list[str]:
-    l = []
-    for i in s:
-        if i != ' ':
-           l.append(i)
-    return l    
+def reverso(texto:str) -> str:
+    al_revez:str=''
+    for i in range(len(texto)-1,-1,-1):
+        al_revez += texto[i]
+    return al_revez
 
 #1.7
-def password(s:str) -> str:
-    if len(s) > 8 and es_segura(s):
-        res:bool= "VERDE"  
-    elif len(s) < 5:
-        res:bool= "ROJA"
+def fortaleza(password:str) -> str:
+    if len(password) > 8 and es_segura(password):
+        res:str="VERDE"
+    elif len(password) < 5:
+        res:str="ROJA"
     else:
-        res:bool= "AMARILLA"
-    return res
-                         
-def es_segura(s:str) -> bool:
+        res:str="AMARILLA"
+    return res            
+
+def es_segura(password:str) -> bool:
     res:bool=False
-    for i in s:
-        if 'A' <= i <= 'Z': # Busco alguna mayuscula.
-            for i in s:
-                if 'a' <= i <= 'z': # Busco alguna minuscula.
-                    for i in s:
-                        if '0' <= i <= '9': # Busco algun numero.
+    for i in password:
+        if 'A' <= i <= 'Z':  #Busco una mayuscula
+            for i in password:
+                if 'a' <= i <= 'z':  #Busco una minuscula
+                    for i in password:
+                        if '0' <= i <= '9':  #Busco un numero
                             res:bool=True
-    return res                        
+    return res 
 
-def checkear():
-    contra = input("Ingrese su password: ")
-    print(password(contra))
-
-    
 #1.8
-def historial(s:list[tuple[str,int]]) -> int: 
-    saldo:int = 0
-    for i in s:
-        if i[0] == "I":
-            saldo += i[1] 
+def saldo_actual(historial:list[tuple[str,int]]) -> int:
+    saldo:int=0
+    for movimiento in historial:
+        if movimiento[0] == "I":
+            saldo += movimiento[1]
         else:
-            saldo -= i[1]
+            saldo -= movimiento[1]
     return saldo
 
 #1.9
-def mas_de_3(palabra:str) -> bool:
-    return len(no_repetidos(palabra)) >= 3
-      
-def es_vocal(s:str) -> bool:
-    if s=='a' or s=='i' or s=='e' or s=='o' or s=='u':
-        res:bool=True
-    elif s=='A' or s=='E' or s=='I' or s=='O' or s=='U':
-        res:bool=True   
-    else:
-        res:bool = False
-    return res
+def es_variada(palabra:str) -> bool:
+    return len(solo_vocales(palabra)) >= 3
 
-def no_repetidos(palabra: str) -> str:
-    nuevo_str:str = ''
-    for i in range(len(palabra)):
+def es_vocal(letra:str) -> bool:
+    if letra in ['a','e','i','o','u']:
+        res:bool=True
+    elif letra in ['A','E','I','O','U']:
+        res:bool=True
+    else:
+        res:bool=False
+    return res    
+
+def solo_vocales(palabra:str) -> str:
+    palabra:str=palabra.lower()
+    vocales:str=''
+    for i in range(len(palabra)): 
         if es_vocal(palabra[i]) and palabra[i] not in palabra[i+1:]:
-            nuevo_str += palabra[i]   
-    return nuevo_str
+            vocales += palabra[i]
+    return vocales
 
 #2.1
-def cero_en_pares_inout(s:list[int]) -> list[int]:
-    for i in range(len(s)):
-        if i%2 == 0:
-            s[i] = 0
-    return s 
+def cero_en_pares_inout(lista:list[any]) -> list[any]:
+    for i in range(len(lista)):
+        if i%2 != 0:
+            lista[i] = 0
+    return lista        
 
 #2.2
-def cero_en_pares_in(s:list[int]) -> list[int]:
-    l:list = s.copy()
-    for i in range(len(l)):
+def cero_en_pares_in(lista:list) -> list:
+    nueva_lista:list = lista.copy()  #Copio el valor de lista en otra referencia fuera de lista.
+    for i in range(len(nueva_lista)):
         if i%2 == 0:
-            l[i] = 0
-    return l
+            nueva_lista[i] = 0
+    return nueva_lista
 
 #2.3
-def sin_vocal(palabra:str) -> str:
-    nueva:str = ''
-    for i in palabra:
-        if not es_vocal(i):
-            nueva += i
-    return nueva   
+def no_vocales(palabra:str) -> str:
+    sin_vocales:str=''
+    for letra in palabra:
+        if not es_vocal(letra):
+            sin_vocales+=letra
+    return sin_vocales
 
 #2.4
 def reemplaza_vocales(palabra:str) -> str:
-    guion:str = ''
-    for i in palabra:
-        if es_vocal(i):
-            guion += '-' 
+    hyphen:str=''
+    for letra in palabra:
+        if es_vocal(letra):
+            hyphen += '-'
         else:
-            guion += i
-    return guion
-
-#2.4
-def dar_vuelta_str(s:str) -> str:
-    reverso:str = ''
-    for i in range(len(s)-1,-1,-1):
-        reverso += s[i]
-    return reverso   
+            hyphen+= letra    
+    return hyphen
 
 #2.5
-def eliminar_repetidos(s:str) -> str:
-    norepetidos:str = ''
-    for i in range(len(s)):
-        if s[i] not in s[i+1:]:
-            norepetidos += s[i]
-    return norepetidos  
+'''es funcion reverso que hize en #1.6 lol.'''
 
-     
+#2.6
+def eliminar_repetidos(palabra:str) -> str:
+    sin_repetidos:str=''
+    for i in range(len(palabra)):
+        if palabra[i] not in palabra[i+1:]:
+            sin_repetidos+=palabra[i]
+    return sin_repetidos
 
+#3.0
+def buen_promedio(notas:list[int]) -> bool:
+    res:bool=True
+    for nota in notas:
+        if nota < 4:
+            res:bool=False
+    return res  
 
-            
+def promociona_o_recursa(notas:list[int]) -> int:
+    if buen_promedio(notas):
+        if (suma_total(notas)/len(notas)) >= 7:
+            res:int=1
+        else:
+            res:int=2
+    else:
+        res:int=3
+    return res
+
+#4.1
+def mis_alumnes() -> list[str]:
+    continuar: bool = True
+    alumnxs: list[str] = []
+    while continuar:
+        entrada = input("Alumnos (escribe 'listo' para salir):")
+        if entrada.lower() != "listo":
+            alumnxs.append(entrada)
+        else:
+            continuar = False  # Actualiza continuar para salir del bucle
+    return alumnxs
+
+#4.2
+def SUBE() -> list[tuple]:
+    historial:list[tuple] = []
+    continuar:bool=True
+    while continuar == True:
+        movimiento:str = input("Ingrese:\n'C' para cargar creditos\n'D' para descontar creditos\n'X' para finalizar:\n\n")
+        if movimiento == "C":
+            cargar:int = int(input("Monto a cargar:"))
+            historial.append((movimiento,cargar))
+            print(f"Movimientos:{historial}")
+        elif movimiento == "D":
+            cargar:int = int(input("Monto a descontar:"))
+            historial.append((movimiento,cargar)) 
+            print(f"Movimientos:{historial}")   
+        elif movimiento == "X":
+            continuar = False
+    return historial
+
+#4.3
+def siete_y_medio() -> list[int]:
+    continuar:bool = True
+    cartas:list[float] = [1,2,3,4,5,6,7,0.5,0.5,0.5]
+    inicio:int = random.choice(cartas)
+    historial = [inicio]
+    while True:
+        if suma_total(historial) <= 7.5:
+            jugada = random.randint(1,12)
+            decision = input(f"Hasta ahora: {inicio}\nQue desea hacer?\n'A' Sacar otra carta:\n'B' Plantarse:\n\n")
+            if decision == "A" and jugada in [8,9]:
+                inicio+=0
+                print(f"Sacaste :{jugada} pero no cuenta! Tienes otro intento!")
+            elif decision == "A" and jugada in [10,11,12]:
+                inicio+=0.5
+                historial.append(0.5) 
+                print(f"Sacaste:{jugada} pero vale 0.5")
+            elif decision == "A" and jugada not in [10,11,12]:
+                inicio+=jugada
+                historial.append(jugada)
+                print(f"Sacaste:{jugada}")
+            elif decision == "B":
+                print("Ganaste!")
+                break
+        else:
+            print("Perdiste! Te pasaste!")
+            break
+    return historial         
+        
            
 
+   
 
             
 
 
-      
-           
-    
- 
-
-
-
-            
-    
-
-
-                
-
-
-          
-    
-
-      
+siete()                         
+  
+                      
          
            
 
 
 
 
- 
+              
+        
+
+
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
        
+    
+         
+
+
+
+
         
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+
+       
+
+
+
+
+
 
 
 
@@ -273,7 +319,24 @@ def eliminar_repetidos(s:str) -> str:
     
 
 
+            
+
+
+                
+
+
+
+
+
+
+#1.7
+
+
+
+
+  
 
        
-
-   
+    
+        
+        
