@@ -1,5 +1,7 @@
 #                                 GUIA 7 WHAT NOW??
 import random
+import numpy as np
+import copy
 
 #1.1
 def pertenece(lista:list[any],x:any) -> bool:
@@ -181,7 +183,7 @@ def mis_alumnes() -> list[str]:
         if entrada.lower() != "listo":
             alumnxs.append(entrada)
         else:
-            continuar = False  # Actualiza continuar para salir del bucle
+            continuar = False  
     return alumnxs
 
 #4.2
@@ -204,7 +206,6 @@ def SUBE() -> list[tuple]:
 
 #4.3
 def siete_y_medio() -> list[int]:
-    continuar:bool = True
     cartas:list[float] = [1,2,3,4,5,6,7,0.5,0.5,0.5]
     inicio:int = random.choice(cartas)
     historial = [inicio]
@@ -228,7 +229,110 @@ def siete_y_medio() -> list[int]:
         print(f"Perdiste te pasaste!! {historial}")
     else:
         print(f"Ganaste!! {historial}")    
-    return historial         
+    return historial    
+
+#5.1
+def pertenece_a_cada_uno(listas:list[list[int]],x:int) -> list[bool]:
+    res:list[bool]=[]
+    for lista in listas:
+        if pertenece(lista,x):
+            res.append(True)
+        else:
+            res.append(False)
+    return res            
+
+#5.2
+def es_matriz(listas:list[list[any]]) -> bool:
+    res:bool=True
+    for i in range(len(listas)-1):
+        if len(listas[i]) > len(listas[i+1]) or len(listas[i]) < len(listas[i+1]):
+            res:bool=False
+    return res
+
+#5.3
+def filas_ordenadas(m:list[list[int]]) -> list[bool]:
+    res:list[bool]=[]
+    for lista in m:
+        if ordenados(lista):
+            res.append(True)
+        else:
+            res.append(False)
+    return res
+
+#5.4
+def matriz_potencia(d:int,p:int) -> list[list[int]]:
+    m_base:[list[list[int]]] = np.random.randint(-10,10,(d,d))
+    print(m_base)
+    m_final = m_base.copy()
+    for _ in range(p-1):
+        m_temp = []
+        copia_m_base:list[list[int]] = m_base
+        for i in range(d):
+            nueva_fila = []
+            for j in range(d):
+                res:int=0
+                for k in range(d):
+                    res += m_final[i][k]*copia_m_base[k][j] 
+                nueva_fila.append(res)
+            m_temp.append(nueva_fila) 
+        m_final = m_temp
+    return m_final
+
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+            
+  
+
+
+
+
+   
+
+            
+
+
+
+
+
+
+
+
+
+
+
+             
+      
+
+         
+
+
+
+        
+
+
+
+
+
+
+
+      
+
+
+
+    
         
            
 
