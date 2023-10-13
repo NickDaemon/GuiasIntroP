@@ -260,24 +260,46 @@ def filas_ordenadas(m:list[list[int]]) -> list[bool]:
     return res
 
 #5.4
+'''Version sin usar nada "Desconocido"'''
+
 def matriz_potencia(d:int,p:int) -> list[list[int]]:
-    m_base:[list[list[int]]] = np.random.randint(-10,10,(d,d))
+    m_base:[list[list[int]]] = np.random.random(d,d)
     print(m_base)
     m_final = m_base.copy()
     for _ in range(p-1):
-        m_temp = []
-        copia_m_base:list[list[int]] = m_base
+        m_temp = []                     
+        mb2:list[list[int]] = m_base  
         for i in range(d):
-            nueva_fila = []
+            filas = []
             for j in range(d):
                 res:int=0
                 for k in range(d):
-                    res += m_final[i][k]*copia_m_base[k][j] 
-                nueva_fila.append(res)
-            m_temp.append(nueva_fila) 
+                    res += m_final[i][k]*mb2[k][j] 
+                filas.append(res)
+            m_temp.append(filas) 
         m_final = m_temp
     return m_final
 
+'''Version usando import copy'''
+
+def matriz_potencia2(d:int,p:int) -> list[list[int]]:
+    m:list[list[int]] = np.random.random(d,d)
+    print(m)
+    m2=copy.deepcopy(m)
+    for _ in range(p-1):
+        m_temp=[]
+        for i in range(d):
+            filas=[]
+            for j in range(d):
+                res:int=0
+                for k in range(d):
+                    res+= m2[i][k]*m[k][j]
+                filas.append(res)
+            m_temp.append(filas) 
+        m2 = m_temp
+    return m2
+
+               
 
 
               
