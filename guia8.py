@@ -1,4 +1,8 @@
 #                              GUIA 8 LETS FUCKING END THIS
+from queue import LifoQueue as Pila
+import random
+
+#                                    ARCHIVOS
 
 #1.1
 def contar_lineas(archivo:str) -> int:
@@ -28,7 +32,6 @@ def cantidad_apariciones(archivo:str,word:str) -> int:
          if palabra == word:
               res +=1
     return res
-
 
 #2
 def empieza_con(linea:str,caracter:str) -> bool:
@@ -113,6 +116,75 @@ def palabrasLegiblesEnBinario(nombre_archivo: str) -> list:
         palabras_legibles.append(palabra_actual)
     
     return palabras_legibles
+
+#7
+def promedio_estudiante(file:str,LU:str) -> float:
+     archivo = open(file,'r')
+     contenido = archivo.read()
+     ordenar = contenido.split('\n')
+     notas:list = []
+     for linea in ordenar:
+          datos = linea.split(',')
+          if datos[0] == LU:
+               notas.append(float(datos[3]))
+     archivo.close()        
+     return sum(notas)/len(notas)    
+
+#                                   PILAS(LIFOQUEUE)
+
+#8
+def generar_azar(n:int,desde:int,hasta:int) -> Pila:
+     pila = Pila()
+     contador = 0
+
+     while contador < n:
+          pila.put(random.randint(desde,hasta))
+          contador +=1
+
+     print(pila.queue)     
+     return pila
+
+#9
+def len_pila(pila:Pila) -> int:
+     contador = []  
+
+     while not pila.empty():
+          elemento = pila.get()
+          contador.append(elemento)
+
+     for i in range(len(contador)-1,-1,-1):
+          pila.put(contador[i]) 
+             
+     return len(contador)
+
+#10
+def max_pila(pila:Pila) -> int:
+     elementos = []
+     
+     while not pila.empty():
+          elemento = pila.get()
+          elementos.append(elemento)
+
+     for i in range(len(elementos)-1,-1,-1):
+          pila.put(elementos[i]) 
+
+     return max(elementos) 
+
+#11
+ 
+
+    
+
+
+
+
+  
+     
+
+
+   
+
+
 
              
 
