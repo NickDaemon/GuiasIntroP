@@ -283,7 +283,7 @@ def matriz_potencia(d:int,p:int) -> list[list[int]]:
 '''Version usando import copy'''
 
 def matriz_potencia2(d:int,p:int) -> list[list[int]]:
-    m:list[list[int]] = np.random.random(d,d)
+    m:list[list[int]] = np.random.randint(-10,10(d,d))
     print(m)
     m2=copy.deepcopy(m)
     for _ in range(p-1):
