@@ -2,7 +2,7 @@
 from queue import LifoQueue as Pila
 import random
 
-#                                    ARCHIVOS
+#                                       ARCHIVOS
 
 #1.1
 def contar_lineas(archivo:str) -> int:
@@ -171,7 +171,49 @@ def max_pila(pila:Pila) -> int:
      return max(elementos) 
 
 #11
+def balanceada(formula:str) -> bool:
+     pila = Pila()
+     res:bool = True
+     for caracter in formula:
+        if caracter == '(':
+            pila.put(caracter)
+        elif caracter == ')':
+            if pila.empty() or pila.get() != '(':
+                res:bool = False
+     return res          
+                  
+#12
+def polaca_inversa(cuenta:str) -> int:
+      postfix = cuenta.split()
+      pila = Pila()
+      print(postfix)
+      for token in postfix:
+         if token not in ['+','-','*','/']:
+              pila.put(token)
+         elif token == '+':
+              elemento = int(pila.get()) 
+              elemento += int(pila.get())
+              pila.put(elemento)
+         elif token == '-':
+              segundo = int(pila.get()) 
+              primero = int(pila.get())
+              elemento = primero - segundo
+              pila.put(elemento)
+         elif token == '*':
+              elemento = int(pila.get()) 
+              elemento *= int(pila.get())
+              pila.put(elemento) 
+         elif token == '/':
+              segundo = int(pila.get()) 
+              primero = int(pila.get())
+              elemento = primero/segundo
+              pila.put(elemento)        
+      return pila.get()            
+             
  
+
+   
+
 
     
 
