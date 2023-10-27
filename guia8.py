@@ -300,7 +300,7 @@ def atencion_clientes(llegada:Cola[str,int,bool,bool]) -> Cola[str,int,bool,bool
      orden = Cola()
      prioridad1 = []
      prioridad2 = []
-     resto = []
+     prioridad3 = []
      clientes = []
      
      while not llegada.empty():
@@ -311,13 +311,13 @@ def atencion_clientes(llegada:Cola[str,int,bool,bool]) -> Cola[str,int,bool,bool
           elif cliente[2] == True:
                prioridad2.append(cliente)
           else:
-               resto.append(cliente) 
+               prioridad3.append(cliente) 
 
      for datos in prioridad1:
           orden.put(datos)
      for datos in prioridad2:
           orden.put(datos)
-     for datos in resto:
+     for datos in prioridad3:
           orden.put(datos)  
      
      for datos in clientes:
@@ -325,32 +325,37 @@ def atencion_clientes(llegada:Cola[str,int,bool,bool]) -> Cola[str,int,bool,bool
     
      return orden  
 
-'''problema atencion_clientes(in llegada:Cola[str,int,bool,bool]) : Cola[str,int,bool,bool]{
-     requiere: |llegada| != 0
+#Especificacion
+'''
+problema atencion_clientes(in llegada:Cola[str,int,bool,bool]) : Cola[str,int,bool,bool] {
+     requiere:|llegada| /= 0
      asegura: |res| = |llegada|
-     asegura: if |res| == 1 then res == llegada fi
-     asegura: (0 <= i < |res|):res[i] pertenece llegada
-     asegura: (0 <= i < |res|):if res[i][3] == True then prioridad1(res,i)
-                                   elif res[i][3] == False and res[i][2] == True then prioridad2(res,i)
+     asegura:(0 <= i < |res| - 1):res[i] pertenece llegada
+     asegura:(0 <= i < |res| - 1):if res[i][3] = True then prioridad1(res,i)
+                                  else 
+                                   if res[i][2] = True then prioridad2(res,i)
                                    else prioridad3(res,i)
+                                   fi   
+                                  fi
      asegura: ordenados(llegada,res)
      }
 
     pred prioridad1(res:Cola[str,int,bool,bool],i:int) {
-     if res[i+1][3] == False then res[i+1][2] == True
-     elif res[i+1][3] and res[i+1][2] == False then prioridad3(res,i+1)
-     else res[i+1][3] == True fi
+          res[i+1][3] = True or prioridad2(res,i)
      }
 
     pred prioridad2(res:Cola[str,int,bool,bool],i:int) {
-    res[i+1][3] == False and if res[i+1][2] == False then prioridad3(res,i+1)
-    else res[i+1][2] == True fi
+          res[i+1][3] = False and 
+               if res[i+1][2] = False then 
+                  prioridad3(res,i+1)
+               else 
+                  res[i+1][2] = True 
+               fi
     }
 
     pred prioridad3(res:Cola[str,int,bool,bool],i:int) {
-    (i <= j < |res|):res[j][3] and res[j][2] == False
+          (i <= j < |res|):res[j][3] and res[j][2] = False
     }
-     
 '''
      
 
