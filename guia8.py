@@ -1,5 +1,6 @@
 #                              GUIA 8 LETS FUCKING END THIS
 from queue import LifoQueue as Pila
+from queue import Queue as Cola
 import random
 
 #                                       ARCHIVOS
@@ -211,8 +212,154 @@ def polaca_inversa(cuenta:str) -> int:
       return pila.get()            
              
  
+#                             C0LAS(FIF0)
+#13
+def cola_azar(n:int,desde:int,hasta:int) -> Cola:
+     cola = Cola()
+     contador = 0
+     while contador < n:
+          elementos = random.randint(desde,hasta)
+          cola.put(elementos)
+          contador +=1
+     print(cola.queue)     
+     return cola
 
+#14
+def len_cola(cola:Cola) -> int:
+     elementos = []
+     while not cola.empty():
+          sale = cola.get()
+          elementos.append(sale)
+     for i in elementos:
+          cola.put(i)
+     return len(elementos)
+
+     
+#15
+def max_cola(cola:Cola) -> int:
+     elementos = []
+     while not cola.empty():
+          sale = cola.get()
+          elementos.append(sale)
+     for i in elementos:
+          cola.put(i)   
+     return max(elementos)  
+
+#16
+def bolillero() -> Cola[int]:
+     bolillas = Cola()
+     sin_repetidos = []
+     while len_cola(bolillas) < 100:
+          numeros = random.randint(0,99)
+          if numeros not in sin_repetidos:
+               bolillas.put(numeros)
+               sin_repetidos.append(numeros)
+     return bolillas
+
+def jugar_bingo(carton:list[int],bolillero:Cola[int]) -> int:
+     jugadas = 0
+     llenado = []
+     bolilleroAux:Cola = Cola()
+    
+     while len(llenado) != len(carton):
+          numero:int = bolillero.get()
+          bolilleroAux.put(numero)
+          jugadas +=1 
+          if numero in carton:
+               llenado.append(numero)
+
+     while not bolillero.empty():
+          num:int = bolillero.get()
+          bolilleroAux.put(num)
+
+     while not bolilleroAux.empty():
+          num:int = bolilleroAux.get() 
+          bolillero.put(num)              
    
+     return jugadas
+
+#17
+def pacientes_urgentes(pacientes:Cola[int,str,str]) -> int:
+     urgencias = []
+     pacientesAux = Cola()
+     
+     while not pacientes.empty():
+          paciente = pacientes.get()
+          pacientesAux.put(paciente)
+          if paciente[0] in [1,2,3]:
+               urgencias.append(paciente[0])
+
+     while not pacientesAux.empty():
+          paciente = pacientesAux.get()
+          pacientes.put(paciente) 
+     
+     return len(urgencias) 
+
+#18
+def atencion_clientes(llegada:Cola[str,int,bool,bool]) -> Cola[str,int,bool,bool]:
+     orden = Cola()
+     prioridad1 = []
+     prioridad2 = []
+     resto = []
+     clientes = []
+     
+     while not llegada.empty():
+          cliente = llegada.get()
+          clientes.append(cliente)
+          if cliente[3] == True:
+               prioridad1.append(cliente)
+          elif cliente[2] == True:
+               prioridad2.append(cliente)
+          else:
+               resto.append(cliente) 
+
+     for datos in prioridad1:
+          orden.put(datos)
+     for datos in prioridad2:
+          orden.put(datos)
+     for datos in resto:
+          orden.put(datos)  
+     
+     for datos in clientes:
+          llegada.put(datos)
+    
+     return orden  
+
+'''problema atencion_clientes(in llegada:Cola[str,int,bool,bool]) : Cola[str,int,bool,bool]{
+     requiere: True
+     asegura: |res| = |llegada|
+     asegura: 0 <= i < |res| -> res[i] pertenece llegada
+     asegura: 0 <= i < |res| -> if res[i][3] == True then res[i+1][3]==True
+                                elif res[i+1][3] == False then res[i+1][2]==True
+                                else i+1 <= j < |res| -> res[j][3] and res[j][2] == False fi
+     asegura: 0 <= i < |res| -> if res[i][3] == False and res[i][2] == True then res[i+1][3] == False and res[i+1][2] == True 
+                                else i+1 <= j < |res| -> res[j][3] and res[j][2] == False fi 
+     asegura: 0 <= i < |res| -> if res[i][3] and res[i][2] == False then i+1 <= j < |res| -> res[j][3] and res[j][2] == False 
+     '''
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+
+
+     
 
 
     
