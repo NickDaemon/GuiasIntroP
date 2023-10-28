@@ -330,32 +330,24 @@ def atencion_clientes(llegada:Cola[str,int,bool,bool]) -> Cola[str,int,bool,bool
 problema atencion_clientes(in llegada:Cola[str,int,bool,bool]) : Cola[str,int,bool,bool] {
      requiere:|llegada| /= 0
      asegura: |res| = |llegada|
-     asegura:(0 <= i < |res| - 1):res[i] pertenece llegada
+     asegura:(0 <= i < |res|):res[i] pertenece llegada
      asegura:(0 <= i < |res| - 1):if res[i][3] = True then prioridad1(res,i)
-                                  else 
-                                   if res[i][2] = True then prioridad2(res,i)
-                                   else prioridad3(res,i)
-                                   fi   
-                                  fi
+                                  else (if res[i][2] = True then prioridad2(res,i)
+                                        else prioridad3(res,i) fi) fi
      asegura: ordenados(llegada,res)
-     }
+}
 
-    pred prioridad1(res:Cola[str,int,bool,bool],i:int) {
-          res[i+1][3] = True or prioridad2(res,i)
-     }
+pred prioridad1(res:Cola[str,int,bool,bool],i:int) {
+     res[i+1][3] = True V prioridad2(res,i)
+}
 
-    pred prioridad2(res:Cola[str,int,bool,bool],i:int) {
-          res[i+1][3] = False and 
-               if res[i+1][2] = False then 
-                  prioridad3(res,i+1)
-               else 
-                  res[i+1][2] = True 
-               fi
-    }
+pred prioridad2(res:Cola[str,int,bool,bool],i:int) {
+     res[i+1][3] = False and (res[i+1][2] == True V prioridad3(res,i+1))
+}
 
-    pred prioridad3(res:Cola[str,int,bool,bool],i:int) {
-          (i <= j < |res|):res[j][3] and res[j][2] = False
-    }
+pred prioridad3(res:Cola[str,int,bool,bool],i:int) {
+     (i <= j < |res|):res[j][3] and res[j][2] = False
+}
 '''
      
 
