@@ -456,6 +456,64 @@ def navegar_adelante(historial:dict,usuario:str) -> dict:
           print("Estas actualizado!")     
      return historial[usuario]
      
+#23
+inventario :dict = {}
+
+#23.1
+def agregar_producto(inventario:dict,nombre:str,precio:float,cantidad:int) -> dict:
+     informacion:dict = {}
+     informacion['precio'] = precio
+     informacion['cantidad'] = cantidad
+     inventario[nombre] = informacion
+     print(inventario)
+     return inventario
+
+#23.2
+
+def actualizar_stock(inventario:dict,nombre:str,cantidad:int) -> dict:
+     inventario[nombre]['cantidad'] -= cantidad
+     return inventario
+
+#23.3
+def actualizar_precio(inventario:dict,nombre:str,precio:float) -> dict:
+     inventario[nombre]['precio'] -= precio
+     return inventario
+
+def actualizar_existencias(inventario:dict,nombre:str,precio:float,cantidad:int) -> dict:
+     actualizar_stock(inventario,nombre,cantidad)
+     actualizar_precio(inventario,nombre,precio)
+     print(inventario)
+     return inventario
+
+#23.4
+def calcular_valor_inventario(inventario:dict) -> float:
+     valor_total = 0
+     for datos in inventario:
+          valor_total += (inventario[datos]['precio']*inventario[datos]['cantidad'])
+     print(valor_total)     
+     return valor_total     
+             
+
+agregar_producto(inventario,"Camisa",20.0,50)
+agregar_producto(inventario,"Pantalon",30.0,30)
+actualizar_existencias(inventario,"Camisa",10.0,10)
+calcular_valor_inventario(inventario) 
+
+      
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
