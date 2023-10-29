@@ -490,7 +490,7 @@ def calcular_valor_inventario(inventario:dict) -> float:
      valor_total = 0
      for datos in inventario:
           valor_total += (inventario[datos]['precio']*inventario[datos]['cantidad'])
-     print(valor_total)     
+     print(f"Valor total del inventario:\n{valor_total}")    
      return valor_total     
              
 
