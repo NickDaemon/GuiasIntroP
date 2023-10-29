@@ -342,13 +342,195 @@ pred prioridad1(res:Cola[str,int,bool,bool],i:int) {
 }
 
 pred prioridad2(res:Cola[str,int,bool,bool],i:int) {
-     res[i+1][3] = False and (res[i+1][2] == True V prioridad3(res,i+1))
+     res[i+1][3] = False and (res[i+1][2] = True V prioridad3(res,i+1))
 }
 
 pred prioridad3(res:Cola[str,int,bool,bool],i:int) {
      (i <= j < |res|):res[j][3] and res[j][2] = False
 }
 '''
+
+
+#                                 DICKSIONARIOS
+#19
+def agrupar_longitud(archivo:str) -> dict:
+     datos = open(archivo,'r')
+     contenido = datos.read()
+     dicksionario = {}
+     palabras = contenido.split()
+     for palabra in palabras:
+          longitud = len(palabra)
+          if longitud in dicksionario:
+               dicksionario[longitud] +=1
+          else:
+               dicksionario[longitud] = 1
+     return dicksionario
+
+#20
+def promedios(datos:str) -> dict:
+     archivo = open(datos,'r')
+     contenido = archivo.read()
+     data = contenido.split('\n')
+     lu = []
+     dicksionario = {}
+     archivo.close()
+     for dato in data:
+          dato = dato.split(',')
+          if dato[0] != 'LU' and dato[0] not in lu and dato[0] != '':
+               lu.append(dato[0])
+     for alumno in lu:
+          dicksionario[alumno] = promedio_estudiante(datos,alumno)       
+     return dicksionario              
+       
+
+#21
+def palabra_frecuente(archivo:str) -> str:
+     datos = open(archivo,'r') 
+     contenido = datos.read()
+     palabras = contenido.split()     
+     listaP = []
+     dicksionario:dict = {}
+     datos.close()
+     for palabra in palabras:
+          if palabra not in dicksionario:
+               dicksionario[palabra] = 1
+          else:
+               dicksionario[palabra] +=1
+     for clave , valor in dicksionario.items():
+          listaP.append([clave,valor])
+     result:list = [listaP[0]]
+     for i in range(len(listaP)):
+          if listaP[i][1] >= result[0][1]:
+               result = [listaP[i]]
+     print(f'La palabra mas frecuente es:\n"{result[0][0]}" \nque aparece {result[0][1]} veces')          
+     return result 
+
+#22.1
+
+historial: dict = {}
+historialAux: dict = {}
+
+#22.2
+def visitar_sitio(historial:dict,usuario:str,sitio:str) -> dict:
+     if usuario not in historial:
+          paginas = Pila()
+          paginas.put(sitio)
+          historial[usuario] = paginas
+     else:
+          historial[usuario].put(sitio)
+     return historial
+
+def ver_dicksionario(historial) -> None:
+    for usuario, paginas in historial.items():
+        print(f"Usuario: {usuario}, Historial: {paginas.queue}")
+
+visitar_sitio(historial,"Mati","Xvideos.com")
+visitar_sitio(historial,"David","Google.com")
+visitar_sitio(historial,"Mati","Pornhub.com")
+visitar_sitio(historial,"Mati","Boyfriendtv.com")
+visitar_sitio(historial,"David","Facebook.com")
+
+
+#22.3
+def navegar_atras(historial:dict,usuario:str) -> dict:
+     global historialAux
+     if not historial[usuario].empty():
+          atras = historial[usuario].get()
+          if usuario in historialAux:
+               historialAux[usuario].put(atras)
+          else:
+               nuevo = Pila()
+               nuevo.put(atras)
+               historialAux[usuario] = nuevo
+     else:
+          print("Ya no hay paginas para retroceder\nVuelve a navegar! ^^")
+     return historial[usuario]
+
+#22.4
+def navegar_adelante(historial:dict,usuario:str) -> dict:
+     global historialAux
+     if not historialAux[usuario].empty():
+          adelante = historialAux[usuario].get()
+          historial[usuario].put(adelante)
+     else:
+          print("Estas actualizado!")     
+     return historial[usuario]
+     
+
+
+
+
+
+
+
+
+
+
+          
+
+
+
+     
+
+     
+
+
+
+
+
+
+
+     
+     
+         
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+     
+
+
+
+
+ 
+
+
+          
+
+
+
+   
+            
+            
+                    
+
+    
+
+
+
+
+
+    
+
+
      
 
 
