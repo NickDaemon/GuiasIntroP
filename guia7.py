@@ -43,32 +43,27 @@ def la_tiene_larga(palabras:list[str]) -> bool:
     return res
 
 #1.6
-def palindromo(texto: str) -> bool:
-    texto = aplanar(texto.lower())  #Convierto en minusculas las mayusculas
-    return texto == aplanar(reverso(texto))
-
-def aplanar(texto:str) -> str:
-    sin_blancos:str=''
-    for i in range(len(texto)):
-        if texto[i] != ' ':
-            sin_blancos += texto[i]
-    return sin_blancos
-
-def reverso(texto:str) -> str:
-    al_revez:str=''
-    for i in range(len(texto)-1,-1,-1):
-        al_revez += texto[i]
-    return al_revez
+def palindromo(text:str) -> bool:
+    texto = text.split()
+    palabra = ''
+    reverso = ''
+    for i in texto:
+        palabra += i
+    palabras = palabra.lower()
+    for i in range(len(palabra)-1,-1,-1):
+        reverso += palabra[i]
+    rever = reverso.lower()
+    return rever == palabras
 
 #1.7
 def fortaleza(password:str) -> str:
     if len(password) > 8 and es_segura(password):
-        res:str="VERDE"
+        return "VERDE"
     elif len(password) < 5:
-        res:str="ROJA"
+        return "ROJA"
     else:
-        res:str="AMARILLA"
-    return res            
+        return "AMARILLA"
+                
 
 def es_segura(password:str) -> bool:
     res:bool=False
@@ -92,25 +87,18 @@ def saldo_actual(historial:list[tuple[str,int]]) -> int:
     return saldo
 
 #1.9
-def es_variada(palabra:str) -> bool:
-    return len(solo_vocales(palabra)) >= 3
-
 def es_vocal(letra:str) -> bool:
     if letra in ['a','e','i','o','u']:
-        res:bool=True
-    elif letra in ['A','E','I','O','U']:
-        res:bool=True
+        return True
     else:
-        res:bool=False
-    return res    
+        return False   
 
-def solo_vocales(palabra:str) -> str:
-    palabra:str=palabra.lower()
-    vocales:str=''
-    for i in range(len(palabra)): 
-        if es_vocal(palabra[i]) and palabra[i] not in palabra[i+1:]:
-            vocales += palabra[i]
-    return vocales
+def es_variada(palabra:str) -> str:
+    vocales:list[str] = []
+    for i in palabra.lower():
+        if es_vocal(i) and i not in vocales:
+            vocales.append(i)
+    return len(vocales) >= 3
 
 #2.1
 def cero_en_pares_inout(lista:list[any]) -> list[any]:
@@ -121,7 +109,7 @@ def cero_en_pares_inout(lista:list[any]) -> list[any]:
 
 #2.2
 def cero_en_pares_in(lista:list) -> list:
-    nueva_lista:list = lista.copy()  #Copio el valor de lista en otra referencia fuera de lista.
+    nueva_lista:list = lista.copy()  
     for i in range(len(nueva_lista)):
         if i%2 == 0:
             nueva_lista[i] = 0
@@ -129,20 +117,20 @@ def cero_en_pares_in(lista:list) -> list:
 
 #2.3
 def no_vocales(palabra:str) -> str:
-    sin_vocales:str=''
-    for letra in palabra:
-        if not es_vocal(letra):
-            sin_vocales+=letra
-    return sin_vocales
+    sinvocal=''
+    for i in palabra:
+        if i not in ["A","E","I","O","U"] and not es_vocal(i): 
+            sinvocal+=i
+    return sinvocal
 
 #2.4
 def reemplaza_vocales(palabra:str) -> str:
     hyphen:str=''
     for letra in palabra:
-        if es_vocal(letra):
+        if letra in ["A","E","I","O","U"] or es_vocal(letra):
             hyphen += '-'
         else:
-            hyphen+= letra    
+            hyphen += letra    
     return hyphen
 
 #2.5
@@ -150,11 +138,11 @@ def reemplaza_vocales(palabra:str) -> str:
 
 #2.6
 def eliminar_repetidos(palabra:str) -> str:
-    sin_repetidos:str=''
-    for i in range(len(palabra)):
-        if palabra[i] not in palabra[i+1:]:
-            sin_repetidos+=palabra[i]
-    return sin_repetidos
+    nueva = ''
+    for pal in palabra:
+        if pal not in nueva:
+            nueva+= pal
+    return nueva
 
 #3.0
 def buen_promedio(notas:list[int]) -> bool:
@@ -188,118 +176,132 @@ def mis_alumnes() -> list[str]:
 
 #4.2
 def SUBE() -> list[tuple]:
-    historial:list[tuple] = []
-    continuar:bool=True
-    while continuar == True:
-        movimiento:str = input("Ingrese:\n'C' para cargar creditos\n'D' para descontar creditos\n'X' para finalizar:\n\n")
-        if movimiento == "C":
-            cargar:int = int(input("Monto a cargar:"))
-            historial.append((movimiento,cargar))
-            print(f"Movimientos:{historial}")
-        elif movimiento == "D":
-            cargar:int = int(input("Monto a descontar:"))
-            historial.append((movimiento,cargar)) 
-            print(f"Movimientos:{historial}")   
-        elif movimiento == "X":
-            continuar = False
-    return historial
+    historial = []
+    contador = True
+    saldo = 0
+    while contador :
+        entrada = input("Que desea hacer?\nPresione 'C' para cargar creditos\nPresione 'D' para descontar creditos\nPresione 'X' si desea salir:\n")
+        if entrada == 'C':
+            operacion = input("Que monto desea cargar?:")
+            historial.append((entrada,int(operacion)))
+            saldo += int(operacion)
+            print(f"Movimientos hasta ahora:{historial}")
+
+        elif entrada == 'D':
+            operacion= input("Que monto desea descontar?:")
+            historial.append((entrada,int(operacion)))
+            saldo -= int(operacion)
+            print(f"Movimientos hasta ahora:{historial}")
+
+        elif entrada == 'X':
+            print(f"Su saldo actual es:{saldo} y Su historial es:{historial}") 
+            contador = False 
+         
+    return historial 
 
 #4.3
-def siete_y_medio() -> list[int]:
-    cartas:list[float] = [1,2,3,4,5,6,7,0.5,0.5,0.5]
-    inicio:int = random.choice(cartas)
-    historial = [inicio]
-    while suma_total(historial) <= 7.5:
-        jugada = random.randint(1,12)
-        decision = input("Que desea hacer?:\n'A' Sacar otra carta\n'B' Plantarse\n\n")
-        if decision == "A" and jugada in [8,9]:
-                inicio+=0
-                
-        elif decision == "A" and jugada in [10,11,12]:
-                inicio+=0.5
-                historial.append(0.5) 
-                
-        elif decision == "A" and jugada not in [10,11,12]:
-                inicio+=jugada
-                historial.append(jugada)
-                
-        elif decision == "B":
-                break
-    if suma_total(historial) > 7.5:
-        print(f"Perdiste te pasaste!! {historial}")
+def siete_y_medio() -> list:
+    cartas:list = [1,2,3,4,5,6,7,10,11,12]
+    verificador:bool = True
+    jugadas:list = []
+    contador:float = 0
+    carta = random.choice(cartas) 
+    if carta in [10,11,12]:
+        contador += 0.5
+        jugadas.append(carta)
     else:
-        print(f"Ganaste!! {historial}")    
-    return historial    
+        contador += carta    
+        jugadas.append(carta)
+    
+    while verificador:
+        jugada = input("Que desea hacer?\n'A' si quiere sacar otra carta:\n'B' si desea plantarse:\n")
+        if jugada == 'A':
+            carta = random.choice(cartas)
+            if carta in [10,11,12]:
+                jugadas.append(carta)
+                contador += 0.5
+            else:
+                jugadas.append(carta)
+                contador += carta
+        if jugada == 'B':
+            if contador < 7.5:
+                print(f"Buena jugada! tus cartas fueron:{jugadas}")
+            elif contador == 7.5:
+                print(f"Ganaste!! sacaste 7 y medio! tus cartas fueron:{jugadas}")
+            else:
+                print(f"Lo siento perdiste! tus cartas fueron {jugadas}") 
+            verificador = False
+    return jugadas    
 
 #5.1
-def pertenece_a_cada_uno(listas:list[list[int]],x:int) -> list[bool]:
-    res:list[bool]=[]
-    for lista in listas:
-        if pertenece(lista,x):
+def pertenece_a_cada_uno(lista:list[list[int]],num:int,res:list) -> None:
+    res.clear()
+    for i in lista:
+        if pertenece(i,num):
             res.append(True)
         else:
-            res.append(False)
-    return res            
+            res.append(False) 
+    print(res)           
 
 #5.2
-def es_matriz(listas:list[list[any]]) -> bool:
-    res:bool=True
-    for i in range(len(listas)-1):
-        if len(listas[i]) > len(listas[i+1]) or len(listas[i]) < len(listas[i+1]):
-            res:bool=False
+def es_matriz(lista:list[list[int]]) -> bool:
+    res:bool = True
+    for i in range(len(lista) - 1):
+        if len(lista[i]) != len(lista[i+1]):
+            res = False
     return res
 
 #5.3
-def filas_ordenadas(m:list[list[int]]) -> list[bool]:
-    res:list[bool]=[]
-    for lista in m:
-        if ordenados(lista):
+def filas_ordenada(matriz:list[list[int]],res:list) -> None:
+    res.clear()
+    for fila in matriz:
+        if ordenados(fila):
             res.append(True)
         else:
-            res.append(False)
-    return res
+            res.append(False) 
+    print(res)
 
 #5.4
 '''Version sin usar nada "Desconocido"'''
 
-def matriz_potencia(d:int,p:int) -> list[list[int]]:
-    m_base:[list[list[int]]] = np.random.random(d,d)
-    print(m_base)
-    m_final = m_base.copy()
+def matriz_potencia(p:int,d:int) -> list[list[int]]:
+    matriz:list[list[int]] = np.random.randint(-10,10,(d,d))
+    print(matriz)
+    mfinal = []
+    for fila in matriz:
+        columna=[]
+        for elem in fila:
+            columna.append(elem)
+        mfinal.append(columna)
     for _ in range(p-1):
-        m_temp = []                     
-        mb2:list[list[int]] = m_base  
+        mtemp = []
         for i in range(d):
             filas = []
             for j in range(d):
-                res:int=0
+                res = 0
                 for k in range(d):
-                    res += m_final[i][k]*mb2[k][j] 
+                    res += mfinal[i][k]*matriz[k][j]
                 filas.append(res)
-            m_temp.append(filas) 
-        m_final = m_temp
-    return m_final
+            mtemp.append(filas) 
+        mfinal = mtemp
+    print(mfinal)    
+    return mfinal
 
-'''Version usando import copy'''
 
-def matriz_potencia2(d:int,p:int) -> list[list[int]]:
-    m:list[list[int]] = np.random.randint(-10,10(d,d))
-    print(m)
-    m2=copy.deepcopy(m)
-    for _ in range(p-1):
-        m_temp=[]
-        for i in range(d):
-            filas=[]
-            for j in range(d):
-                res:int=0
-                for k in range(d):
-                    res+= m2[i][k]*m[k][j]
-                filas.append(res)
-            m_temp.append(filas) 
-        m2 = m_temp
-    return m2
-
-               
+''' Version Extra '''
+def matriz_potencia2(p:int,d:int) -> list[list[int]]:
+    matriz:list[list[int]] = np.random.randint(-10,10,(d,d))
+    maux = copy.deepcopy(matriz)
+    for _ in range(p - 1):
+            m2 = [[None] * d for _ in range(d)]
+            for i in range(d):
+                for j in range(d):
+                    res:int = 0
+                    for k in range(d):
+                        res += maux[i][k] * matriz[k][j]
+                    m2[i][j] = res
+            maux = m2        
+    return maux           
 
 
               
