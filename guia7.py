@@ -273,6 +273,8 @@ def matriz_potencia(p:int,d:int) -> list[list[int]]:
         for elem in fila:
             columna.append(elem)
         mfinal.append(columna)
+    #Arriba hago un copy.deepcopy() sin usarlo <.< 
+       
     for _ in range(p-1):
         mtemp = []
         for i in range(d):
