@@ -13,14 +13,11 @@ def contar_lineas(archivo:str) -> int:
     return len(contenido)
 
 #1.2
-def existe_palabra(archivo:str,palabra:str) -> bool:
-    texto = open(archivo,'r')
-    contenido = texto.read()
-    texto.close()
-    res:bool = False
-    if palabra in contenido:
-            res:bool = True
-    return res    
+def existe_palabra(file:str,palabra:str) -> bool:
+    archivo = open(file,'r')
+    contenido = archivo.read()
+    archivo.close()
+    return palabra in contenido    
 
 #1.3
 def cantidad_apariciones(archivo:str,word:str) -> int:
@@ -35,26 +32,22 @@ def cantidad_apariciones(archivo:str,word:str) -> int:
     return res
 
 #2
-def empieza_con(linea:str,caracter:str) -> bool:
-     for c in linea:
-          if c == " ":
-               continue
-          elif c == caracter:
-               return True
-          else:
-               return False
-          
 def no_comments(archivo:str) -> str:
-    original = open(archivo,'r')
-    contenido = original.readlines()
-    modif:list = []
-    original.close()
+    file = open(archivo,'r')
+    contenido = file.readlines()
+    clonado = []
+    file.close()
     for linea in contenido:
-         if not empieza_con(linea,'#'):
-              modif.append(linea)
-    clon = open('noComments.txt','w')
-    clonado = clon.writelines(modif)
-    return clonado          
+        for i in linea:
+            if i == ' ':
+                continue
+            elif i != '#' and linea not in clonado:
+                clonado.append(linea)
+            else:
+                break
+    clon = open('5mentarios.txt','w') 
+    clon.writelines(clonado)
+    return clon          
               
              
 #3
@@ -181,6 +174,8 @@ def balanceada(formula:str) -> bool:
         elif caracter == ')':
             if pila.empty() or pila.get() != '(':
                 res:bool = False
+     if not pila.empty():
+         res = False            
      return res          
                   
 #12
@@ -330,10 +325,10 @@ def atencion_clientes(llegada:Cola[str,int,bool,bool]) -> Cola[str,int,bool,bool
 problema atencion_clientes(in llegada:Cola[str,int,bool,bool]) : Cola[str,int,bool,bool] {
      requiere:|llegada| /= 0
      asegura: |res| = |llegada|
-     asegura:(0 <= i < |res|):res[i] pertenece llegada
-     asegura:(0 <= i < |res| - 1):if res[i][3] = True then prioridad1(res,i)
-                                  else (if res[i][2] = True then prioridad2(res,i)
-                                        else prioridad3(res,i) fi) fi
+     asegura:(0 <= i < |res|) -> res[i] pertenece llegada
+     asegura:(0 <= i < |res| - 1) -> if res[i][3] = True then prioridad1(res,i)
+                                     else (if res[i][2] = True then prioridad2(res,i)
+                                           else prioridad3(res,i) fi) fi
      asegura: ordenados(llegada,res)
 }
 
@@ -346,7 +341,7 @@ pred prioridad2(res:Cola[str,int,bool,bool],i:int) {
 }
 
 pred prioridad3(res:Cola[str,int,bool,bool],i:int) {
-     (i <= j < |res|):res[j][3] and res[j][2] = False
+     (i <= j < |res|) -> res[j][3] and res[j][2] = False
 }
 '''
 
